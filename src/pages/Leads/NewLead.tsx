@@ -3,11 +3,12 @@ import { Box ,Chip,FormControl,Input,InputAdornment,InputLabel,MenuItem,Outlined
 import CallIcon from '@mui/icons-material/Call';
 import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import axios from 'axios';
 
 type Props = {}
 const ITEM_HEIGHT = 48;
@@ -68,7 +69,40 @@ const NewLead = (props: Props) => {
   const [personName, setPersonName] = React.useState<string[]>([]);
   const [valueBudget, setBudgetValue] = React.useState<number[]>([20000, 45000]);
   const [transactionType,setTransactionType] = useState('');
+  const [isSending,setIsSending] = useState(false);
 
+  const sendRequest = useCallback(async () => {
+    console.log("Hello Riki")
+    setIsSending(true);
+    const bearerToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYXZpc2guY2hhdXZleUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX01BTkFHRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDkxL3plYnJhL2xvZ2luIiwiZXhwIjoxNjk0NzcxNzQxfQ.fg4BLAmq1og4YK5RXPhm00JkDT55I-_d9yV90jXpcfA";
+    const config = {
+      headers: { Authorization: `Bearer ${bearerToken}`,
+                'Access-Control-Allow-Origin': '*',
+              }
+  };
+
+    const bodyParam = {
+    "firstName": "Sunit",
+    "lastName" : "Singha",
+    "emailId": "ankit.biswas@gmail.com",
+    "contactNumber": "7892014327",
+    "preferredAreas": "Bellandur-Kadubeesanahalli",
+    "notes": "Dummy Lead Test",
+    "preferredOccupancyDate": "2021-09-11T12:40:00.000Z",
+    "baseTimeStamp": {
+    "created_by": "SYSTEM",
+    "created_on": "2021-09-11T12:40:00.000Z"
+  }
+  };
+
+  
+  axios.post(
+    'http://localhost:9091/lead-manager/v1/add-lead',
+    bodyParam,
+    config).then(console.log).catch(console.log);
+    console.log("Chandana")
+    setIsSending(false);
+  },[isSending]);
   const setTransactionTypeHandleChange = (event:SelectChangeEvent) => {
     setTransactionType(event.target.value);
   }
@@ -222,6 +256,11 @@ const NewLead = (props: Props) => {
           />
       </FormControl>
       </div>
+      <br/>
+      <FormControl sx={{m:1, minWidth: 300}}>
+        <input type ="button" disabled={isSending} onClick={sendRequest} name="Submit" />
+
+      </FormControl>
     </Box>
     </>
 

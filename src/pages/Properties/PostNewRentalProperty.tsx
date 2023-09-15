@@ -6,8 +6,10 @@ import PropertyDetails from './MiniForms/PropertyDetails';
 import LocalityDetails from './MiniForms/LocalityDetails';
 
 import SendIcon from '@mui/icons-material/Send';
-
-
+import RentalDetails from './MiniForms/RentalDetails';
+import Amenities from './MiniForms/Amenities';
+import Images from './MiniForms/Images';
+import Schedule from './MiniForms/Schedule';
 
 
 
@@ -97,9 +99,25 @@ const PostNewRentalProperty = () => {
   <TabPanel value={value} index={1}>
      <LocalityDetails/>
   </TabPanel>
-  </Box>    
 
+  <TabPanel value={value} index={2}>
+    <RentalDetails/>
+  </TabPanel>
+
+  <TabPanel value={value} index={3}>
+    <Amenities/>
+  </TabPanel>
     
+
+  <TabPanel value={value} index={4}>
+    <Images/>
+  </TabPanel>
+
+  <TabPanel value={value} index={5}>
+    <Schedule/>
+  </TabPanel>
+
+  </Box>  
 
   </>
 

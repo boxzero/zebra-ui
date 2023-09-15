@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "types":"material-ui",
+    "types":["material-ui"],
     "lib": [
       "dom",
       "dom.iterable",
