@@ -20,16 +20,10 @@ import Schedule from './MiniForms/Schedule';
 const PostNewRentalProperty = () => {
 
   //const [apartmentType, setApartmentType] = useState('');
-  const [activeTabIndex, setState] = React.useState(0);
-
- 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setState(value );
-  };
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log("Changed");
+    console.log("Changed", newValue);
     setValue(newValue);
   };
 
@@ -89,7 +83,7 @@ const PostNewRentalProperty = () => {
      <Grid container justifyContent="flex-end">
     <FormControl sx={{ m: 1}} >
     <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<SendIcon />}
-    onClick={() => setState(1) }
+    onClick={(e) => handleChange(e, value+1) }
     >
          Next
     </Button></FormControl>
