@@ -10,7 +10,8 @@ import RentalDetails from './MiniForms/RentalDetails';
 import Amenities from './MiniForms/Amenities';
 import Images from './MiniForms/Images';
 import Schedule from './MiniForms/Schedule';
-
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 
 
@@ -82,7 +83,7 @@ const PostNewRentalProperty = () => {
      <PropertyDetails/>
      <Grid container justifyContent="flex-end">
     <FormControl sx={{ m: 1}} >
-    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<SendIcon />}
+    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateNextIcon />}
     onClick={(e) => handleChange(e, value+1) }
     >
          Next
@@ -92,6 +93,28 @@ const PostNewRentalProperty = () => {
    
   <TabPanel value={value} index={1}>
      <LocalityDetails/>
+    
+    <Grid container spacing={12} justifyContent={'space-between'}>  
+    
+    <Grid item> 
+    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateBeforeIcon />}
+    onClick={(e) => handleChange(e, value-1) }
+    >
+         Previous
+    </Button> 
+    </Grid>
+
+    <Grid item>
+    <Button sx={{ width: 160, height: 50}} variant="contained" startIcon={<NavigateNextIcon />}
+    onClick={(e) => handleChange(e, value+1) }
+    >
+         Next
+    </Button>
+    </Grid>
+    
+    </Grid>
+
+    
   </TabPanel>
 
   <TabPanel value={value} index={2}>

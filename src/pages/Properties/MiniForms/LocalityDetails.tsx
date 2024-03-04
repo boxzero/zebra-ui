@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { useState } from "react";
 
 type Props = {}
@@ -26,7 +26,7 @@ const LocalityDetails = (props: Props) => {
            <>
            <div>
             <FormControl sx = {{m:1}}>
-            <InputLabel id="demo-select-small">Location</InputLabel>
+            <InputLabel id="demo-select-small">City</InputLabel>
                 <Select sx={{width: 300}}
                     labelId="demo-select-small"
                     id="demo-select-small"
@@ -38,7 +38,45 @@ const LocalityDetails = (props: Props) => {
                     
                 </Select>
             </FormControl>
+
+            <FormControl sx = {{m:1}}>
+                <TextField
+                        label="Locality"
+                        id="outlined-start-adornment"
+                        sx={{width: 300}}
+                        
+                        /> 
+            </FormControl>                
            </div>
+           <br />
+           <br />
+           <FormControl sx = {{m:1}}>
+                <TextField
+                        label="Landmark/Street"
+                        id="outlined-start-adornment"
+                        sx={{width: 300}}
+                        
+                        /> 
+            </FormControl>
+
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br />
+
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br />
+
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+
+
            </>
     );
 }
