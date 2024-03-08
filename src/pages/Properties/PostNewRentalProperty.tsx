@@ -4,14 +4,15 @@ import React, {useState} from 'react'
 import Tab from '@mui/material/Tab';
 import PropertyDetails from './MiniForms/PropertyDetails';
 import LocalityDetails from './MiniForms/LocalityDetails';
+import RentalDetails from './MiniForms/RentalDetails';
 
 import SendIcon from '@mui/icons-material/Send';
-import RentalDetails from './MiniForms/RentalDetails';
 import Amenities from './MiniForms/Amenities';
 import Images from './MiniForms/Images';
 import Schedule from './MiniForms/Schedule';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import OwnerDetails from './MiniForms/OwnerDetails';
 
 
 
@@ -74,9 +75,10 @@ const PostNewRentalProperty = () => {
        <Tab label="Property Details" {...a11yProps(0)}/>
         <Tab label="Locality Details" {...a11yProps(1)}/>
         <Tab label="Rental Details" {...a11yProps(2)}/>
-        <Tab label="Amenities" {...a11yProps(3)}/>
-        <Tab label="Images" {...a11yProps(4)}/>
-        <Tab label="Schedule" {...a11yProps(5)}/>
+         <Tab label="Owner Details" {...a11yProps(3)}/>
+        <Tab label="Amenities" {...a11yProps(4)}/>
+        <Tab label="Images" {...a11yProps(5)}/>
+        <Tab label="Schedule" {...a11yProps(6)}/>
    </Tabs>     
   </Box>
   <TabPanel value={value} index={0}>
@@ -117,21 +119,69 @@ const PostNewRentalProperty = () => {
     
   </TabPanel>
 
-  <TabPanel value={value} index={2}>
-    <RentalDetails/>
+   <TabPanel value={value} index={2}>
+     <RentalDetails/>
+    
+    <Grid container spacing={12} justifyContent={'space-between'}>  
+    
+    <Grid item> 
+    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateBeforeIcon />}
+    onClick={(e) => handleChange(e, value-1) }
+    >
+         Previous
+    </Button> 
+    </Grid>
+
+    <Grid item>
+    <Button sx={{ width: 160, height: 50}} variant="contained" startIcon={<NavigateNextIcon />}
+    onClick={(e) => handleChange(e, value+1) }
+    >
+         Next
+    </Button>
+    </Grid>
+    
+    </Grid>
+
+    
   </TabPanel>
 
-  <TabPanel value={value} index={3}>
+  <TabPanel value={value} index={4}>
     <Amenities/>
   </TabPanel>
     
 
-  <TabPanel value={value} index={4}>
+  <TabPanel value={value} index={5}>
     <Images/>
   </TabPanel>
 
-  <TabPanel value={value} index={5}>
+  <TabPanel value={value} index={6}>
     <Schedule/>
+  </TabPanel>
+
+   <TabPanel value={value} index={3}>
+     <OwnerDetails/>
+    
+    <Grid container spacing={12} justifyContent={'space-between'}>  
+    
+    <Grid item> 
+    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateBeforeIcon />}
+    onClick={(e) => handleChange(e, value-1) }
+    >
+         Previous
+    </Button> 
+    </Grid>
+
+    <Grid item>
+    <Button sx={{ width: 160, height: 50}} variant="contained" startIcon={<NavigateNextIcon />}
+    onClick={(e) => handleChange(e, value+1) }
+    >
+         Next
+    </Button>
+    </Grid>
+    
+    </Grid>
+
+    
   </TabPanel>
 
   </Box>  
