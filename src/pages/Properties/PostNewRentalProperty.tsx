@@ -79,7 +79,6 @@ const PostNewRentalProperty = () => {
         <Tab label="Amenities" {...a11yProps(4)}/>
         <Tab label="Images" {...a11yProps(5)}/>
         <Tab label="Schedule" {...a11yProps(6)}/>
-        <Tab label="Owner Details" {...a11yProps(7)}/>
    </Tabs>     
   </Box>
   <TabPanel value={value} index={0}>

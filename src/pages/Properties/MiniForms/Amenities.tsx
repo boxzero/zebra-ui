@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid ,Box} from '@mui/material';
+import { Grid ,Box, Tooltip} from '@mui/material';
 import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, Autocomplete ,TextField, FormControlLabel, Checkbox } from '@mui/material';
@@ -17,7 +17,7 @@ const Amenities = ()=> {
             <FormControlLabel sx = {{paddingRight:'150px'}}
           value="end"
           control={<Checkbox /> } 
-          label="Bachelor Male" 
+          label="Lift" 
           labelPlacement="end"
         />
          
@@ -52,11 +52,17 @@ const Amenities = ()=> {
 
         <Grid item xs = {6}>
         <Box p={2}>
+        
           Item 1
+          
         </Box>
       </Grid>
 
     </Grid>
+
+    <Grid item xs={12}>
+                  <TextField label="Message" multiline rows={4} placeholder="Type your message here" variant="outlined" fullWidth required />
+     </Grid>
     </div>
   )
 }
