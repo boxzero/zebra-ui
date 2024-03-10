@@ -11,7 +11,11 @@ const colorConfigs = {
         bg: "#fff",
         color: "#000"
     },
-    mainBg: colors.grey["100"]
+    mainBg: colors.grey["100"],
+
+    amenities:{
+        color:'#7A737B'
+    }
 };
 
 export default colorConfigs;
