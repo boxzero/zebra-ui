@@ -1,15 +1,30 @@
-import { Avatar, Box, Drawer, List, Stack, Toolbar } from "@mui/material";
+import { Avatar, Box, Drawer, IconButton, List, Stack, Toolbar } from "@mui/material";
 import assets from "../../assets/assets";
 import colorConfigs from "../../configs/colorConfigs";
 import sizeConfigs from "../../configs/sizeConfigs";
 import appRoutes from "../../routes/appRoutes";
 import SidebarItem from "./SidebarItem";
 import SidebarItemCollapse from "./SidebarItemCollapse";
+import { useState } from "react";
+// import {IconButton} from "@mui/material";
+// import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Sidebar = () => {
+
+const [open,setOpen] = useState(false);
+
+
   return (
+    
+    //  <IconButton>
+    //   <MenuIcon/>
+    //  </IconButton>
+
     <Drawer
       variant="permanent"
+      open={open}
+      onClose={() => setOpen(false)}
       sx={{
         width: sizeConfigs.sidebar.width,
         flexShrink: 0,
@@ -25,7 +40,7 @@ const Sidebar = () => {
       <List disablePadding>
         <Toolbar sx={{ marginBottom: "20px" }}>
           <Stack
-            sx={{ width: "100%" }}
+           sx={{ width: "100%" }}
             direction="row"
             justifyContent="center"
           >
@@ -55,4 +70,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default Sidebar;
