@@ -74,7 +74,7 @@ const NewLead = (props: Props) => {
   const sendRequest = useCallback(async () => {
     console.log("Hello Riki")
     setIsSending(true);
-    const bearerToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYXZpc2guY2hhdXZleUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX01BTkFHRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDkxL3plYnJhL2xvZ2luIiwiZXhwIjoxNjk0NzcxNzQxfQ.fg4BLAmq1og4YK5RXPhm00JkDT55I-_d9yV90jXpcfA";
+    const bearerToken = localStorage.getItem("access_token");
     const config = {
       headers: { Authorization: `Bearer ${bearerToken}`,
                 'Access-Control-Allow-Origin': '*',
@@ -97,7 +97,7 @@ const NewLead = (props: Props) => {
 
   
   axios.post(
-    'http://localhost:9091/lead-manager/v1/add-lead',
+    'http://localhost:9091/tenant-leads/add-lead',
     bodyParam,
     config).then(console.log).catch(console.log);
     console.log("Chandana")
