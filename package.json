@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.10.16",
     "@mui/lab": "^5.0.0-alpha.114",
     "@mui/material": "^5.15.12",
@@ -20,7 +21,9 @@
     "axios": "^1.5.0",
     "dayjs": "^1.11.10",
     "jsonwebtoken": "^9.0.2",
+    "material-table": "^2.0.5",
     "mui-phone-number": "^3.0.3",
+    "mui-tel-input": "^5.1.2",
     "nvm": "^0.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

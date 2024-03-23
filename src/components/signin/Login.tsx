@@ -30,7 +30,7 @@ const Login = () => {
           'Content-Type':  'application/json'
         }
       });
-      const response = await api.get('/login?username='+email+'&password='+password);
+      const response = await api.get('/zebra/login?username='+email+'&password='+password);
       const data = response.data;
       if (response.status === 200) {
         console.log(data);
@@ -43,6 +43,7 @@ const Login = () => {
     } catch (error) {
       // handle error
       console.log('Error in post call')
+      console.log(error)
     }
   }     
 
