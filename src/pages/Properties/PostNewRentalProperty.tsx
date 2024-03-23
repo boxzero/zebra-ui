@@ -171,12 +171,83 @@ const PostNewRentalProperty = () => {
     
   </TabPanel>
 
+
   <TabPanel value={value} index={5}>
-    <Images/>
+     <Images/>
+       <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+    <br/>
+  <br/>
+  <br/>
+  <br/>
+   <br/>
+  
+ 
+
+    
+    <Grid container spacing={12} justifyContent={'space-between'}>  
+    
+    <Grid item> 
+    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateBeforeIcon />}
+    onClick={(e) => handleChange(e, value-1) }
+    >
+         Previous
+    </Button> 
+    </Grid>
+
+    <Grid item>
+    <Button sx={{ width: 160, height: 50}} variant="contained" startIcon={<NavigateNextIcon />}
+    onClick={(e) => handleChange(e, value+1) }
+    >
+         Next
+    </Button>
+    </Grid>
+    
+    </Grid>
+
+    
   </TabPanel>
 
-  <TabPanel value={value} index={6}>
-    <Schedule/>
+   <TabPanel value={value} index={6}>
+     <Schedule/>
+      <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+    <br/>
+
+
+ 
+
+    
+
+    
+    <Grid item> 
+    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateBeforeIcon />}
+    onClick={(e) => handleChange(e, value-1) }
+    >
+         Previous
+    </Button> 
+    </Grid>
+
+ 
+    
+   
+
+    
   </TabPanel>
 
    <TabPanel value={value} index={3}>
