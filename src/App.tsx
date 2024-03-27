@@ -5,6 +5,7 @@ import ZebraDashBoard from './pages/ZebraDashboard/ZebraDashBoard';
 import { routes } from './routes';
 import Notfound from './components/common/Notfound';
 import Login from './components/signin/Login';
+import ViewUser from './pages/UserManagement/ViewUser';
 
 
 
@@ -16,6 +17,7 @@ function App() {
          {routes}
       </Route>
       <Route path='/login' element={<Login/>}></Route>
+      
       <Route path='*' element={<Notfound/>}>
         
       </Route>
