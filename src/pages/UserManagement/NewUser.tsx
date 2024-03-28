@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import {MuiTelInput} from 'mui-tel-input';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 type Props = {}
 
 
@@ -15,8 +16,8 @@ interface NewUserData {
   lastName: string;
   contactNumber: string;
   active: boolean;
-  isEmailVerified: boolean;
-  isPhoneVerified:boolean;
+  emailVerified: boolean;
+  phoneVerified:boolean;
   notes:string;
 }
 const NewUser = (props: Props) => {
@@ -30,8 +31,8 @@ const NewUser = (props: Props) => {
     lastName: '',
     contactNumber: '',
     active: false,
-    isEmailVerified: false,
-    isPhoneVerified: false,
+    emailVerified: false,
+    phoneVerified: false,
     notes:'',
   });
 
@@ -45,7 +46,8 @@ const NewUser = (props: Props) => {
 
   const handleChange = (event: any) => {
     
-    if (event.target.name === 'isEmailVerified' || event.target.name === 'isPhoneVerified') {
+    if (event.target.name === 'emailVerified' || event.target.name === 'phoneVerified' || event.target.name === 'active') {
+      console.log(event.target)
       setFormData({
         ...formData,
         [event.target.name]: event.target.checked,
@@ -57,6 +59,7 @@ const NewUser = (props: Props) => {
     
   };
 
+  const navigate = useNavigate ();
   const [contactNumber, setContactNumber] = React.useState('');
 
   const handleContactChange = (newContactNumber: string) => {
@@ -80,6 +83,8 @@ const NewUser = (props: Props) => {
     try {
       const response = await axios.post('http://localhost:9091/users/v1/register-user',formData,{headers});
       console.log(response.data)
+      alert("User created successfully!");
+      navigate("/users/viewallusers");
     }catch(error) {
         console.log('Error in creating user',error)
     }
@@ -143,28 +148,28 @@ const NewUser = (props: Props) => {
       <br/>
     <FormControl sx={{ m: 1 }}>
      <FormControlLabel
-          value={formData.isEmailVerified}
+          checked={formData.emailVerified}
           control={<Checkbox />}
           label="Email Verified"
           labelPlacement="end"
-          name='isEmailVerified' onChange={handleChange}
+          name='emailVerified' onChange={handleChange}
         />
       </FormControl>
       <br/> <br/>
     <FormControl sx={{ m: 1 }}>
     <FormControlLabel
-          value={formData.isPhoneVerified}
+          checked={formData.phoneVerified}
           control={<Checkbox />}
           label="Phone Number Verified"
           labelPlacement="end"
-          name='isPhoneVerified' onChange={handleChange}
+          name='phoneVerified' onChange={handleChange}
         /> 
     </FormControl>
 
     <br/> <br/>
     <FormControl sx={{ m: 1 }}>
     <FormControlLabel
-          value={formData.active}
+          checked={formData.active}
           control={<Checkbox />}
           label="User Active"
           labelPlacement="end"
