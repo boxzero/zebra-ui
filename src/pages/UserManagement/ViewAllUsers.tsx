@@ -70,28 +70,45 @@ const ViewAllUsers = () => {
 
     if(access_token === null) {alert("Token is missing"); return;}
     // Create headers object with access_token
-    const headers = {
+
+    try{    
+      const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${access_token}`,
-    };
+      };
+
     const response = await axios.delete(`http://localhost:9091/users/v1/delete/${id}`,{headers});
     
     alert(response.data);
+  }catch (error:any) {
+    if (error.response && error.response.status === 403) {
+      alert('Forbidden: Access is denied due to insufficient permissions.');
+    } else {
+      alert('An error occurred while fetching the data.');
+    }
+  }
   }
 
   const fetchData = async () => {
 
-    const access_token = localStorage.getItem('access_token');
-    //const access_token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmtpdC5iaXN3YXM5QGdtYWlsLmNvbSIsInJvbGVzIjpbIlJPTEVfTUFOQUdFUiIsIlJPTEVfU1VQRVJfQURNSU4iXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDkxL3plYnJhL2xvZ2luIiwiZXhwIjoxNzExNjc3MjY1fQ.JINqH5KUnhEpmkWPGvLtT8akWJuXHRkPdFREdnIJZp4";
-    if(access_token === null) {alert("Token is missing"); return;}
-    // Create headers object with access_token
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${access_token}`,
-    };
-    const response = await axios.get('http://localhost:9091/users/v1/all',{headers});
-    
-    setRows(response.data);
+      try{  const access_token = localStorage.getItem('access_token');
+        //const access_token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmtpdC5iaXN3YXM5QGdtYWlsLmNvbSIsInJvbGVzIjpbIlJPTEVfTUFOQUdFUiIsIlJPTEVfU1VQRVJfQURNSU4iXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDkxL3plYnJhL2xvZ2luIiwiZXhwIjoxNzExNjc3MjY1fQ.JINqH5KUnhEpmkWPGvLtT8akWJuXHRkPdFREdnIJZp4";
+        if(access_token === null) {alert("Token is missing"); return;}
+        // Create headers object with access_token
+        const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access_token}`,
+        };
+        const response = await axios.get('http://localhost:9091/users/v1/all',{headers});
+        
+        setRows(response.data);
+      }catch(err:any) {
+        if (err.response && err.response.status === 403) {
+          alert('Forbidden: Access is denied due to insufficient permissions.');
+        } else {
+          alert('An error occurred while fetching the data.');
+        }
+      }
   }
   
   useEffect(() => {
