@@ -5,11 +5,13 @@ import { AppBar, Avatar, Box,  IconButton, Menu, Toolbar, Tooltip, Typography } 
 import colorConfigs from '../../configs/colorConfigs';
 import sizeConfigs from '../../configs/sizeConfigs';
 import assets from '../../assets/assets';
+import { useNavigate } from 'react-router';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 const pages = ['Products', 'Pricing', 'Blog'];
-const Topbar = () => {
 
+const Topbar = () => {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -20,11 +22,31 @@ const Topbar = () => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const handleCloseUserMenu = (event: any) => {
 
-  const handleCloseUserMenu = () => {
+
+    const name  = event.target.textContent.trim();
+
+    console.log(name);
+
+    switch (name) {
+      case 'Profile':
+        alert('Profile clicked!');
+        break;
+      case 'Account':
+        alert('Account clicked!');
+        break;
+      case 'Dashboard':
+        alert('Dashboard clicked!');
+        break;
+      case 'Logout':
+        console.log('Logout clicked!');
+        localStorage.removeItem('access_token');
+        navigate("/login");
+        break;
+      default:
+        break;
+    }
     setAnchorElUser(null);
   };
 
@@ -95,11 +117,22 @@ const Topbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
-              ))}
+
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Account</Typography>
+                </MenuItem>
+
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Dashboard</Typography>
+                </MenuItem>
+
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
+              
             </Menu>
           </Box>
 

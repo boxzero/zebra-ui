@@ -24,6 +24,7 @@ import AssignRole from "../pages/UserManagement/AssignRole";
 import ViewAllRoles from "../pages/UserManagement/ViewAllRoles";
 import AddRole from "../pages/UserManagement/AddRole";
 import AddExpense from "../pages/Expense/AddExpense";
+import ViewUser from "../pages/UserManagement/ViewUser";
 
 
 
@@ -173,7 +174,13 @@ const appRoutes: RouteType[] = [
               sidebarProps: {
                 displayText: "Assign Role"
               }  
+            },
+            {
+              path: "/users/view/:id",
+              element: <ViewUser />,
+              state:"users.viewuser"
             }
+          
 
         ]
 

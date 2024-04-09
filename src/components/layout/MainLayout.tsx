@@ -5,11 +5,13 @@ import colorConfigs from '../../configs/colorConfigs';
 import sizeConfigs from '../../configs/sizeConfigs';
 import Sidebar from '../common/Sidebar';
 import Topbar from '../common/Topbar';
+import CheckAuth from '../common/CheckAuth';
 
 type Props = {}
 
 const MainLayout = () => {
   return (
+    
     <Box sx={{display: "flex"}}>
 
       <Topbar/>
@@ -36,6 +38,8 @@ const MainLayout = () => {
          <Outlet /> 
         </Box>
     </Box>
+
+
   )
 }
 
