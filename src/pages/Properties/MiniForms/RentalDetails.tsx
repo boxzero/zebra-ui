@@ -5,11 +5,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Box } from '@mui/material'
+import { Box } from '@mui/material'
 
 // import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { ErrorSharp } from '@mui/icons-material';
 
@@ -43,7 +42,30 @@ const RentalDetails = (props: Props) => {
       label: "Maintenance Extra"
     }
   ];
+    {
+      value: "1",
+      label: "Maintenance Included"
+    },
+    {
+      value: "2",
+      label: "Maintenance Extra"
+    }
+  ];
 
+  const furnitures = [
+    {
+      value: "1",
+      label: "Fully furnished"
+    },
+    {
+      value: "2",
+      label: "Semi-furnished"
+    },
+    {
+      value: "3",
+      label: "Unfurnished"
+    }
+  ];
   const furnitures = [
     {
       value: "1",
@@ -178,13 +200,36 @@ const RentalDetails = (props: Props) => {
 
 
   const monthlyMaintenenceChangeHandler = (event: SelectChangeEvent) => {
+    const option = event.target.value;
+    setmonthlyMaintenence(option);
+    if (option === '1') {
+      setExpectedMaintenance('0');
+      setisexpectedMaintenanceHidden(false);
+    } else {
+      setExpectedMaintenance('')
+      setisexpectedMaintenanceHidden(true);
+    }
+  }
+  const handleMaintenanceAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value) || value === '') {
+      setExpectedMaintenance(value);
+    }
+  };
+  const monthlyMaintenenceChangeHandler = (event: SelectChangeEvent) => {
     setmonthlyMaintenence(event.target.value);
   }
 
   const furnitureChangeHandler = (event: SelectChangeEvent) => {
     setFurniture(event.target.value);
   }
+  const furnitureChangeHandler = (event: SelectChangeEvent) => {
+    setFurniture(event.target.value);
+  }
 
+  const parkingChangeHandler = (event: SelectChangeEvent) => {
+    setParking(event.target.value);
+  }
   const parkingChangeHandler = (event: SelectChangeEvent) => {
     setParking(event.target.value);
   }
@@ -222,6 +267,8 @@ const RentalDetails = (props: Props) => {
       <div>
         <FormControl sx={{ m: 1 }} >
 
+        <FormControl sx={{ m: 1 }} >
+
           <TextField
             label="Expected Rent"
             id="outlined-start-adornment"
@@ -234,6 +281,7 @@ const RentalDetails = (props: Props) => {
               endAdornment: <InputAdornment position="end">/Month</InputAdornment>
             }}
 
+          />
           />
 
         </FormControl>
@@ -259,13 +307,54 @@ const RentalDetails = (props: Props) => {
         <br />
         <FormControl sx={{ m: 1 }}>
           <FormControlLabel control={<Checkbox defaultChecked={false} />} label="Rent Negotiable" />
+        <br />
+        <br />
+        <FormControl sx={{ m: 1 }}>
+          <FormControlLabel control={<Checkbox defaultChecked={false} />} label="Rent Negotiable" />
         </FormControl>
+        <br />
+        <br />
         <br />
         <br />
 
         <div>
           <FormControl sx={{ m: 1 }}>
+          <FormControl sx={{ m: 1 }}>
             <InputLabel id="demo-select-small">Monthly Maintenance</InputLabel>
+            <Select sx={{ width: 400 }}
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={monthlyMaintenence}
+              label="ApartmentType"
+              onChange={monthlyMaintenenceChangeHandler}
+            >
+              {maintenance.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
+
+            </Select>
+          </FormControl>
+          {isexpectedMaintenanceHidden && (<FormControl sx={{ m: 1 }}>
+
+            <TextField
+              label="Expected Maintenance"
+              id="outlined-start-adornment"
+              sx={{ width: 500 }}
+
+              value={expectedMaintenance}
+              
+              onChange={handleMaintenanceAmountChange}
+              InputProps={{
+                startAdornment: <InputAdornment position="start"><CurrencyRupeeIcon /></InputAdornment>,
+                endAdornment: <InputAdornment position="end">/Month</InputAdornment>
+              }}
+            />
+
+
+
+          </FormControl>)}
+
+
+
+        </div>
             <Select sx={{ width: 400 }}
               labelId="demo-select-small"
               id="demo-select-small"
@@ -279,6 +368,9 @@ const RentalDetails = (props: Props) => {
             </Select>
           </FormControl>
         </div>
+
+
+        <br />
 
 
         <br />
@@ -305,8 +397,34 @@ const RentalDetails = (props: Props) => {
             <FormControlLabel sx={{ paddingRight: '150px' }}
               value="top"
               control={<Checkbox />}
+
+        <FormControl component="fieldset" sx={{ m: 1 }}  >
+          <FormLabel component="legend" required>Preferred Tenants</FormLabel>
+          <FormGroup aria-label="position" row>
+            <FormControlLabel sx={{ paddingRight: '150px' }}
+              value="top"
+              control={<Checkbox />}
               label="Anyone"
               labelPlacement="end"
+            />
+            <FormControlLabel sx={{ paddingRight: '150px' }}
+              value="start"
+              control={<Checkbox />}
+              label="Family"
+              labelPlacement="end"
+            />
+            <FormControlLabel sx={{ paddingRight: '150px' }}
+              value="bottom"
+              control={<Checkbox />}
+              label="Bachelor Female"
+              labelPlacement="end"
+            />
+            <FormControlLabel sx={{ paddingRight: '150px' }}
+              value="end"
+              control={<Checkbox />}
+              label="Bachelor Male"
+              labelPlacement="end"
+            />
             />
             <FormControlLabel sx={{ paddingRight: '150px' }}
               value="start"
@@ -336,7 +454,18 @@ const RentalDetails = (props: Props) => {
           </FormGroup>
         </FormControl>
         <br />
+            <FormControlLabel sx={{ paddingRight: '150px' }}
+              value="end"
+              control={<Checkbox />}
+              label="Comapny"
+              labelPlacement="end"
+            />
+          </FormGroup>
+        </FormControl>
+        <br />
 
+        <div>
+          <FormControl sx={{ m: 1 }}>
         <div>
           <FormControl sx={{ m: 1 }}>
             <InputLabel id="demo-select-small">Furnishing</InputLabel>
@@ -356,6 +485,7 @@ const RentalDetails = (props: Props) => {
           </FormControl>
 
 
+          <FormControl sx={{ m: 1 }}>
           <FormControl sx={{ m: 1 }}>
             <InputLabel id="demo-select-small">Parking</InputLabel>
             <Select sx={{ width: 500 }}

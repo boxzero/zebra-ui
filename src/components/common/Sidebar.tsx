@@ -6,25 +6,24 @@ import appRoutes from "../../routes/appRoutes";
 import SidebarItem from "./SidebarItem";
 import SidebarItemCollapse from "./SidebarItemCollapse";
 import { useState } from "react";
-// import {IconButton} from "@mui/material";
-// import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
+  const [open, setOpen] = useState(false);
 
-const [open,setOpen] = useState(false);
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
 
+  const closeDrawer = () => {
+    setOpen(false);
+  };
 
   return (
-    
-    //  <IconButton>
-    //   <MenuIcon/>
-    //  </IconButton>
-
     <Drawer
       variant="permanent"
       open={open}
-      onClose={() => setOpen(false)}
       sx={{
         width: sizeConfigs.sidebar.width,
         flexShrink: 0,
@@ -37,25 +36,40 @@ const [open,setOpen] = useState(false);
         }
       }}
     >
-      <List disablePadding>
-        <Toolbar sx={{ marginBottom: "20px" }}>
-          <Stack
-           sx={{ width: "100%" }}
-            direction="row"
-            justifyContent="center"
+      <Toolbar sx={{ justifyContent: "space-between" }}>
+        {open ? (
+          <IconButton
+            color="inherit"
+            aria-label="close drawer"
+            onClick={closeDrawer}
+            edge="start"
+            sx={{ mr: 2 }}
           >
-        <Box component="img"
-        sx={{ 
-
-          height: 44
-         }}
-         alt="HouseClay-Zebra"
-         src={assets.images.dashboard_center_logo}
-         >
-          
-        </Box>
-          </Stack>
-        </Toolbar>
+            <CloseIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleDrawer}
+            edge="start"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
+        <Stack direction="row" justifyContent="center">
+          <Box
+            component="img"
+            sx={{
+              height: 44
+            }}
+            alt="HouseClay-Zebra"
+            src={assets.images.dashboard_center_logo}
+          />
+        </Stack>
+      </Toolbar>
+      <List disablePadding>
         {appRoutes.map((route, index) => (
           route.sidebarProps ? (
             route.child ? (
@@ -70,4 +84,4 @@ const [open,setOpen] = useState(false);
   );
 };
 
-export default Sidebar;
+export default Sidebar;

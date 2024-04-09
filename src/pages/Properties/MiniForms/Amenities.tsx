@@ -1,15 +1,11 @@
 import React from 'react'
-import { Grid ,Box, Badge, Paper} from '@mui/material';
-import FormGroup from '@mui/material/FormGroup';
+import { Grid ,Box} from '@mui/material';
 import FormLabel from '@mui/material/FormLabel';
-import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, Autocomplete ,TextField, FormControlLabel, Checkbox,Stack,Chip,Button,ButtonGroup} from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, Autocomplete ,TextField, FormControlLabel, Checkbox,Stack,Chip,Button,ButtonGroup,Typography} from '@mui/material';
 import {Tooltip} from '@mui/material';
-// import { Badge } from '@mui/icons-material';
 import ElevatorIcon from '@mui/icons-material/Elevator';
-// import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import BathtubIcon from '@mui/icons-material/Bathtub';
 import BalconyIcon from '@mui/icons-material/Balcony';
-import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import YardIcon from '@mui/icons-material/Yard';
 import BedroomParentIcon from '@mui/icons-material/BedroomParent';
