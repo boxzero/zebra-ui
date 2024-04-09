@@ -89,20 +89,33 @@ const Schedule = () => {
 
   // availability
 
-    const handleButton4Click = () => {
-    setIs4Outlined(!is4Outlined);
-    setButton4Background(is4Outlined ? 'green' : 'transparent');
-  };
+const handleButton4Click = () => {
+  setIs4Outlined(true);
+  setIs5Outlined(false);
+  setIs6Outlined(false);
+  setButton4Background('green');
+  setButton5Background('transparent');
+  setButton6Background('transparent');
+};
 
-      const handleButton5Click = () => {
-    setIs5Outlined(!is5Outlined);
-    setButton5Background(is5Outlined ? 'green' : 'transparent');
-  };
+const handleButton5Click = () => {
+  setIs4Outlined(false);
+  setIs5Outlined(true);
+  setIs6Outlined(false);
+  setButton4Background('transparent');
+  setButton5Background('green');
+  setButton6Background('transparent');
+};
 
-      const handleButton6Click = () => {
-    setIs6Outlined(!is6Outlined);
-    setButton6Background(is6Outlined ? 'green' : 'transparent');
-  };
+const handleButton6Click = () => {
+  setIs4Outlined(false);
+  setIs5Outlined(false);
+  setIs6Outlined(true);
+  setButton4Background('transparent');
+  setButton5Background('transparent');
+  setButton6Background('green');
+};
+
 
 
   return (
