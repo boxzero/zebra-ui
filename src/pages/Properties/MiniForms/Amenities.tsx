@@ -1,15 +1,11 @@
 import React from 'react'
-import { Grid ,Box, Badge, Paper} from '@mui/material';
-import FormGroup from '@mui/material/FormGroup';
+import { Grid ,Box} from '@mui/material';
 import FormLabel from '@mui/material/FormLabel';
-import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, Autocomplete ,TextField, FormControlLabel, Checkbox,Stack,Chip,Button,ButtonGroup} from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, Autocomplete ,TextField, FormControlLabel, Checkbox,Stack,Chip,Button,ButtonGroup,Typography} from '@mui/material';
 import {Tooltip} from '@mui/material';
-// import { Badge } from '@mui/icons-material';
 import ElevatorIcon from '@mui/icons-material/Elevator';
-// import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import BathtubIcon from '@mui/icons-material/Bathtub';
 import BalconyIcon from '@mui/icons-material/Balcony';
-import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import YardIcon from '@mui/icons-material/Yard';
 import BedroomParentIcon from '@mui/icons-material/BedroomParent';
@@ -25,8 +21,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PestControlRodentIcon from '@mui/icons-material/PestControlRodent';
 import PowerIcon from '@mui/icons-material/Power';
 import { useState } from 'react';
-// import colorConfigs from "../../configs/colorConfigs";
-import colorConfigs from '../../../configs/colorConfigs';
+import { green, red } from '@mui/material/colors';
 
 const Amenities = ()=> {
 
@@ -77,6 +72,46 @@ const Amenities = ()=> {
             label:"Others"
         },
     ];
+
+    
+  const [is1YesSelected, setIs1YesSelected] = useState(false);
+  const [is1NoSelected, setIs1NoSelected] = useState(false);
+
+  const handleYesClick = () => {
+    setIs1YesSelected(true);
+    setIs1NoSelected(false);
+  };
+
+  const handleNoClick = () => {
+    setIs1YesSelected(false);
+    setIs1NoSelected(true);
+  };
+
+  const [is2YesSelected, setIs2YesSelected] = useState(false);
+  const [is2NoSelected, setIs2NoSelected] = useState(false);
+
+  const handle2YesClick = () => {
+    setIs2YesSelected(true);
+    setIs2NoSelected(false);
+  };
+
+  const handle2NoClick = () => {
+    setIs2YesSelected(false);
+    setIs2NoSelected(true);
+  };
+
+  const [is3YesSelected, setIs3YesSelected] = useState(false);
+  const [is3NoSelected, setIs3NoSelected] = useState(false);
+
+  const handle3YesClick = () => {
+    setIs3YesSelected(true);
+    setIs3NoSelected(false);
+  };
+
+  const handle3NoClick = () => {
+    setIs3YesSelected(false);
+    setIs3NoSelected(true);
+  };
 
 
 
@@ -164,62 +199,80 @@ const Amenities = ()=> {
         </Grid>
 
         <br/>
+        <Box sx={{ display: 'flex', gap: 11 }} >
 
-        <Grid container my = {4} alignItems="center">
-        <Grid item xs={3.5} sx={{m:1 , paddingRight:'150px'}}>
+   <Box sx={{mx:1,padding: 2, borderRadius: 2, width:'350px',border: '1px solid #000'  }}>
+      <Box sx={{ display: 'flex',justifyContent: 'left'}}>
+        <Typography variant="body1" sx={{ marginRight: '30px',marginTop:'10px'}}>Gym</Typography>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+      <Button 
+      sx={{ width: '100px', height: '50px',border: '1px solid #000',color:'#000' }}
+        variant="outlined"
+        style={{ backgroundColor: is1YesSelected ? green[500] : undefined, color: is1YesSelected ? 'white' : undefined }}
+        onClick={handleYesClick}
+      >
+        Yes
+      </Button>
+      <Button
+      sx={{ width: '100px', height: '50px',border: '1px solid #000',color:'#000' }}
+        variant="outlined"
+        style={{ backgroundColor: is1NoSelected ? red[500] : undefined, color: is1NoSelected ? 'white' : undefined }}
+        onClick={handleNoClick}
+      >
+        No
+      </Button>
+    </Box>
+      </Box>
+    </Box>
 
-        <Button sx={{color: colorConfigs.amenities.color,m:1}} variant="outlined" color = 'primary' >Gym
+     <Box sx={{ mx:1, padding: 2, borderRadius: 2, width:'350px' ,border: '1px solid #000' }}>
+      <Box sx={{ display: 'flex',justifyContent: 'left' }}>
+        <Typography variant="body1" sx={{ marginRight: '10px' }}>Non-Veg allowed</Typography>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+      <Button 
+      sx={{ width: '100px', height: '50px',border: '1px solid #000',color:'#000' }}
+        variant="outlined"
+        style={{ backgroundColor: is2YesSelected ? green[500] : undefined, color: is2YesSelected ? 'white' : undefined }}
+        onClick={handle2YesClick}
+      >
+        Yes
+      </Button>
+      <Button
+      sx={{ width: '100px', height: '50px',border: '1px solid #000',color:'#000' }}
+        variant="outlined"
+        style={{ backgroundColor: is2NoSelected ? red[500] : undefined, color: is2NoSelected ? 'white' : undefined }}
+        onClick={handle2NoClick}
+      >
+        No
+      </Button>
+    </Box>
+      </Box>
+    </Box>
 
-        <ButtonGroup  sx={{paddingLeft:'70px', paddingTop:'10px',paddingBottom:'10px'}}
-  disableElevation
-  variant="outlined"
-  aria-label="Disabled button group"
-  
->
-  <Button sx={{color: colorConfigs.amenities.color}}  >Yes</Button>
-  <Button sx={{color: colorConfigs.amenities.color}} >No</Button>
-</ButtonGroup>
-
-
-</Button>
-</Grid>
-
-<Grid item xs={3.5} sx={{m:1 , paddingRight:'150px'}}>
-
-        <Button sx={{color: colorConfigs.amenities.color,m:1}} variant="outlined" color = 'primary' > Non-Veg Allowed
-
-        <ButtonGroup  sx={{paddingLeft:'70px', paddingTop:'10px',paddingBottom:'10px'}}
-  disableElevation
-  variant="outlined"
-  aria-label="Disabled button group"
-  
->
-  <Button sx={{color: colorConfigs.amenities.color}}>Yes</Button>
-  <Button sx={{color: colorConfigs.amenities.color}}>No</Button>
-</ButtonGroup>
-
-
-</Button>
-</Grid>
-
-<Grid item xs={3.5} sx={{m:1 , paddingRight:'150px'}}>
-
-        <Button  sx={{color: colorConfigs.amenities.color,m:1}} variant="outlined" color = 'primary'  >Gated Security
-
-        <ButtonGroup  sx={{paddingLeft:'70px', paddingTop:'10px',paddingBottom:'10px'}}
-  disableElevation
-  variant="outlined"
-  aria-label="Disabled button group"
-  
->
-  <Button sx={{color: colorConfigs.amenities.color}}>Yes</Button>
-  <Button sx={{color: colorConfigs.amenities.color}}>No</Button>
-</ButtonGroup>
-
-
-</Button>
-</Grid>
-</Grid>
+     <Box sx={{mx:1, padding: 2, borderRadius: 2, width:'350px',border: '1px solid #000'  }}>
+      <Box sx={{ display: 'flex',justifyContent: 'left' }}>
+        <Typography variant="body1" sx={{ marginRight: '10px' }}>Gated Security</Typography>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+      <Button 
+      sx={{ width: '100px', height: '50px',border: '1px solid #000',color:'#000' }}
+        variant="outlined"
+        style={{ backgroundColor: is3YesSelected ? green[500] : undefined, color: is3YesSelected ? 'white' : undefined }}
+        onClick={handle3YesClick}
+      >
+        Yes
+      </Button>
+      <Button
+      sx={{ width: '100px', height: '50px',border: '1px solid #000',color:'#000' }}
+        variant="outlined"
+        style={{ backgroundColor: is3NoSelected ? red[500] : undefined, color: is3NoSelected ? 'white' : undefined }}
+        onClick={handle3NoClick}
+      >
+        No
+      </Button>
+    </Box>
+      </Box>
+    </Box>
+    </Box>
 <Grid container my = {6} alignItems="center">
         <Grid item xs={3.5} sx={{m:1}}>
 
