@@ -23,11 +23,32 @@ const PostNewRentalProperty = () => {
 
   //const [apartmentType, setApartmentType] = useState('');
   const [value, setValue] = React.useState(0);
+  
+
+  
+  const [formData, setFormData] = useState({
+    apartmentType: '',
+    bhkType: '',
+    floor: '',
+    totalfloor: '',
+    propertyAge: '',
+    facing: '',
+    builtupArea: ''
+  });
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log("Changed", newValue);
     setValue(newValue);
   };
+  
+  
+  const handleNextTab=()=>{
+    setValue(prevTab=>prevTab+1);
+  }
+  const handlePrevTab=()=>{
+    if(value>0)
+    setValue(prevTab=>prevTab-1);
+  }
 
 
 
@@ -82,19 +103,12 @@ const PostNewRentalProperty = () => {
    </Tabs>     
   </Box>
   <TabPanel value={value} index={0}>
-     <PropertyDetails/>
-     <Grid container justifyContent="flex-end">
-    <FormControl sx={{ m: 1}} >
-    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateNextIcon />}
-    onClick={(e) => handleChange(e, value+1) }
-    >
-         Next
-    </Button></FormControl>
-    </Grid>
+     <PropertyDetails  onNextTab={handleNextTab}/>
+     
   </TabPanel>
    
   <TabPanel value={value} index={1}>
-     <LocalityDetails/>
+     <LocalityDetails onNextTab={handleNextTab} OnPrevTab={handlePrevTab}/>
     
     <Grid container spacing={12} justifyContent={'space-between'}>  
     
@@ -120,7 +134,7 @@ const PostNewRentalProperty = () => {
   </TabPanel>
 
    <TabPanel value={value} index={2}>
-     <RentalDetails/>
+     <RentalDetails onNextTab={handleNextTab} OnPrevTab={handlePrevTab}/>
     
     <Grid container spacing={12} justifyContent={'space-between'}>  
     
@@ -146,7 +160,7 @@ const PostNewRentalProperty = () => {
   </TabPanel>
 
   <TabPanel value={value} index={4}>
-     <Amenities/>
+     <Amenities onNextTab={handleNextTab} OnPrevTab={handlePrevTab} />
     
     <Grid container spacing={12} justifyContent={'space-between'}>  
     
@@ -251,7 +265,7 @@ const PostNewRentalProperty = () => {
   </TabPanel>
 
    <TabPanel value={value} index={3}>
-     <OwnerDetails/>
+     <OwnerDetails onNextTab={handleNextTab} OnPrevTab={handlePrevTab}/>
     
     <Grid container spacing={12} justifyContent={'space-between'}>  
     
