@@ -25,6 +25,7 @@ import ViewAllRoles from "../pages/UserManagement/ViewAllRoles";
 import AddRole from "../pages/UserManagement/AddRole";
 import AddExpense from "../pages/Expense/AddExpense";
 import ViewUser from "../pages/UserManagement/ViewUser";
+import EditUser from "../pages/UserManagement/EditUser";
 
 
 
@@ -179,6 +180,11 @@ const appRoutes: RouteType[] = [
               path: "/users/view/:id",
               element: <ViewUser />,
               state:"users.viewuser"
+            },
+            {
+              path: "/users/edit/:id",
+              element: <EditUser/>,
+              state: "users.edituser"
             }
           
 

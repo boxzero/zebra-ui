@@ -24,6 +24,7 @@ const ViewUser = () => {
         phoneVerified: false,
         firstName: '',
         lastName : '',
+        notes: '',
         baseTimeStamp: {
             created_on: '',
             created_by:'',
@@ -149,6 +150,14 @@ const ViewUser = () => {
             value={user.roles.map((role) => role.name).join(' , ')} />
         </FormControl>
 
+        <FormControl sx={{m:1}}>
+                <TextField sx = {{width:1020,m:1}}
+                    multiline
+                    label = 'Notes'
+                    rows = {3}
+                    name='notes' value={user.notes}  placeholder='Additional Notes '
+                    variant='outlined'/>
+        </FormControl>
 
     </Box></div>
 

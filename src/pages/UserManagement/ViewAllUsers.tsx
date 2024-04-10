@@ -23,7 +23,7 @@ const ViewAllUsers = () => {
   
   
   function handleEdit(id: GridRowId): void {
-    alert("Edit")
+    navigate("/users/edit/"+id);
     
   }
   
@@ -115,8 +115,7 @@ const ViewAllUsers = () => {
     fetchData();
   },[])
   return (
-   
-  <Box sx={{height:700,width:'100%'}}>
+    <Box sx={{height:700,width:'100%'}}>
     <Typography variant='h6' component='h6'
     sx={{textAlign:'left',mt:2,mb:2}}>Manage Users</Typography>
   <DataGrid
@@ -130,5 +129,3 @@ const ViewAllUsers = () => {
 }
 
 export default ViewAllUsers;
-
-
