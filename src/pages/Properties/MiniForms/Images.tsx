@@ -1,13 +1,17 @@
 import React, { useState, ChangeEvent, useRef } from 'react';
-import { Button, Grid, Paper, FormLabel, Typography } from '@mui/material';
+import { Button, Grid, Paper, FormLabel, Typography,FormControl } from '@mui/material';
 import { Delete, PhotoCamera } from '@mui/icons-material';
 
 interface Image {
   id: number;
   url: string;
 }
+interface Props{
+  onNextTab:()=>void
+  onPrevTab:()=>void
+}
 
-const ImageUpload: React.FC = () => {
+const ImageUpload: React.FC <Props>= (props) => {
   const [images, setImages] = useState<Image[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -48,6 +52,15 @@ const ImageUpload: React.FC = () => {
       fileInputRef.current.click();
     }
   };
+  const proceedNext=images.length>0;
+  const handleNextClick=()=>{
+    if(proceedNext){
+      props.onNextTab();
+    }
+    else{
+      alert('Upload at least one image')
+    }
+  }
 
   return (
     <div>
@@ -65,7 +78,8 @@ const ImageUpload: React.FC = () => {
           <Paper
             variant="outlined"
             style={{
-              width: '1540px',
+              width: '70vw',
+              maxWidth:'800%',
               height: '200px',
               display: 'flex',
               flexDirection: 'column',
@@ -109,6 +123,18 @@ const ImageUpload: React.FC = () => {
           </Grid>
         ))}
       </Grid>
+      <Grid container justifyContent="space-between">
+                <FormControl sx={{ m: 1 }}>
+                    <Button sx={{ width: 160, height: 50 }} variant="contained" onClick={props.onPrevTab}>
+                        Previous
+                    </Button>
+                </FormControl>
+                <FormControl sx={{ m: 1 }}>
+                    <Button sx={{ width: 160, height: 50 }} variant="contained" onClick={handleNextClick} type="submit">
+                        Next
+                    </Button>
+                </FormControl>
+            </Grid>
     </div>
   );
 };

@@ -91,7 +91,8 @@ const RentalDetails = (props: Props) => {
     furniture: '',
     parking: '',
     Description: '',
-    preferredTenanats: ''
+    preferredTenanats: '',
+    expectedMaintenance:''
   });
   const [errors, setErrors] = useState({
     propertyAvailable: '',
@@ -175,31 +176,21 @@ const RentalDetails = (props: Props) => {
       alert("Fill all the details")
     }
   }
-  const [expectedMaintenance,setExpectedMaintenance]=useState('');
+  const [Maintenance,setMaintenance]=useState('');
   const [isexpectedMaintenanceHidden, setisexpectedMaintenanceHidden]=useState(false);
 
-
-
-
-
-
-  const monthlyMaintenenceChangeHandler = (event: SelectChangeEvent) => {
-    const option = event.target.value;
-    setmonthlyMaintenence(option);
-    if (option === '1') {
-      setExpectedMaintenance('0');
-      setisexpectedMaintenanceHidden(false);
-    } else {
-      setExpectedMaintenance('')
-      setisexpectedMaintenanceHidden(true);
-    }
+  const handleExpectedmaintenance=(event: SelectChangeEvent)=>{
+    const option = event.target.value as string;
+    setMaintenance(option);
+    setFormData({ ...formData, monthlyMaintenence: option });
+    if(option === '2')
+    setisexpectedMaintenanceHidden(true); 
   }
-  const handleMaintenanceAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (/^\d*$/.test(value) || value === '') {
-      setExpectedMaintenance(value);
-    }
-  };
+
+
+
+
+  
   
 
   const furnitureChangeHandler = (event: SelectChangeEvent) => {
@@ -299,7 +290,7 @@ const RentalDetails = (props: Props) => {
               name='monthlyMaintenence'
               value={formData.monthlyMaintenence}
               label="ApartmentType"
-              onChange={handleChange}
+              onChange={handleExpectedmaintenance}
             >
               {maintenance.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
 
@@ -312,9 +303,10 @@ const RentalDetails = (props: Props) => {
               id="outlined-start-adornment"
               sx={{ width: 500 }}
 
-              value={expectedMaintenance}
+              value={formData.expectedMaintenance}
+              onChange={handleChange}
               
-              onChange={handleMaintenanceAmountChange}
+              name='expectedMaintenance'
               InputProps={{
                 startAdornment: <InputAdornment position="start"><CurrencyRupeeIcon /></InputAdornment>,
                 endAdornment: <InputAdornment position="end">/Month</InputAdornment>
