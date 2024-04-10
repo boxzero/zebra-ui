@@ -124,7 +124,7 @@ const PostNewRentalProperty = () => {
 
 
   <TabPanel value={value} index={5}>
-     <Images/>
+     <Images onNextTab={handleNextTab} onPrevTab={handlePrevTab}/>
        <br/>
   <br/>
   <br/>
@@ -144,7 +144,7 @@ const PostNewRentalProperty = () => {
   </TabPanel>
 
    <TabPanel value={value} index={6}>
-     <Schedule/>
+     <Schedule onNextTab={handleNextTab} OnPrevTab={handlePrevTab}/>
       <br/>
   <br/>
   <br/>
