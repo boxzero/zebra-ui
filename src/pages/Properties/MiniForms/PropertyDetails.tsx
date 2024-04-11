@@ -145,7 +145,7 @@ const PropertyDetails = (props: Props) => {
     totalfloor: '',
     propertyAge: '',
     facing: '',
-    builtUpArea: '',
+    
 
   })
   const handleChange = (event: SelectChangeEvent<string> | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -157,8 +157,7 @@ const PropertyDetails = (props: Props) => {
       formData.floor!==''&&
       formData.totalfloor!==''&&
       formData.propertyAge!==''&&
-      formData.facing!==''&&
-      formData.builtupArea!==''
+      formData.facing!==''
     );
   }
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -190,10 +189,7 @@ const PropertyDetails = (props: Props) => {
       isValidForm = false;
     }
 
-    if (!formData.builtupArea) {
-      newErrors.builtUpArea = 'built up area is required';
-      isValidForm = false;
-    }
+   
     
 
     setErrors(newErrors);
@@ -358,7 +354,7 @@ const PropertyDetails = (props: Props) => {
             value={formData.builtupArea}
             name="builtupArea"
             onChange={handleChange}
-            error={!!errors.builtUpArea}
+            
             InputProps={{
               endAdornment: <InputAdornment position="end">Sq.Ft.</InputAdornment>,
             }}

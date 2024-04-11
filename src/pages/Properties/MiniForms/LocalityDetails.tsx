@@ -86,6 +86,7 @@ const LocalityDetails = (props: Props) => {
                         name='city'
                         value={formData.city}
                         label="ApartmentType"
+                        error={!!errors.city}
                         onChange={handleChange}
                     >
                         {cities.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
@@ -99,6 +100,7 @@ const LocalityDetails = (props: Props) => {
                         name='locality'
                         value={formData.locality}
                         onChange={handleChange}
+                        error={!!errors.locality}
                         id="outlined-start-adornment"
                         sx={{ width: 300 }}
 
@@ -113,6 +115,7 @@ const LocalityDetails = (props: Props) => {
                     name="LandMark"
                     value={formData.LandMark}
                     onChange={handleChange}
+                    error={!!errors.LandMark}
                     id="outlined-start-adornment"
                     sx={{ width: 300 }}
 

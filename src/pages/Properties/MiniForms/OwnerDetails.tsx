@@ -95,6 +95,7 @@ function OwnerDetails(props: Props) {
               name='firstName'
               value={formData.firstName}
               onChange={handleChange}
+              error={!!errors.firstName}
               id="outlined-start-adornment"
               sx={{ width: 300 }}
 
@@ -107,6 +108,7 @@ function OwnerDetails(props: Props) {
               name='lastName'
               value={formData.lastName}
               onChange={handleChange}
+              error={!!errors.lastName}
               id="outlined-start-adornment"
               sx={{ width: 300 }}
 
@@ -116,7 +118,7 @@ function OwnerDetails(props: Props) {
         <br />
         <div>
         <FormControl sx={{m:1}}>
-         <MuiTelInput label='Phone' defaultCountry='IN' fullWidth value={formData.contactNumber} name='contactNumber' onChange={handleContactChange} sx={{width: 300}}/>
+         <MuiTelInput label='Phone' defaultCountry='IN' fullWidth value={formData.contactNumber} name='contactNumber' onChange={handleContactChange} error={!!errors.contactNumber} sx={{width: 300}}/>
       </FormControl>
         </div>
         <br />
@@ -128,6 +130,7 @@ function OwnerDetails(props: Props) {
               name='Email'
               value={formData.Email}
               onChange={handleChange}
+              error={!!errors.Email}
               id="outlined-start-adornment"
               sx={{ width: 300 }}
 
@@ -143,6 +146,7 @@ function OwnerDetails(props: Props) {
             name='Notes'
             value={formData.Notes}
             onChange={handleChange}
+            error={!!errors.Notes}
             rows={3}
             variant='outlined' />
         </div>

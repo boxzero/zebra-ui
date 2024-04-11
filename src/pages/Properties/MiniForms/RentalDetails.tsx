@@ -185,6 +185,7 @@ const RentalDetails = (props: Props) => {
     setFormData({ ...formData, monthlyMaintenence: option });
     if(option === '2')
     setisexpectedMaintenanceHidden(true); 
+    else setisexpectedMaintenanceHidden(false); 
   }
 
 
@@ -224,6 +225,7 @@ const RentalDetails = (props: Props) => {
             label="ApartmentType"
             name='propertyAvailable'
             onChange={handleChange}
+            error={!!errors.propertyAvailable}
           >
             {propertyAvailableTypes.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
 
@@ -245,6 +247,7 @@ const RentalDetails = (props: Props) => {
             name='ExpectedRent'
             value={formData.ExpectedRent}
             onChange={handleChange}
+            error={!!errors.ExpectedRent}
             InputProps={{
               startAdornment: <InputAdornment position="start"><CurrencyRupeeIcon /></InputAdornment>,
               endAdornment: <InputAdornment position="end">/Month</InputAdornment>
@@ -264,6 +267,7 @@ const RentalDetails = (props: Props) => {
             onChange={handleChange}
             id="outlined-start-adornment"
             sx={{ width: 500 }}
+            error={!!errors.ExpectedDeposit}
 
             InputProps={{
               startAdornment: <InputAdornment position="start"><CurrencyRupeeIcon /></InputAdornment>,
@@ -290,6 +294,7 @@ const RentalDetails = (props: Props) => {
               name='monthlyMaintenence'
               value={formData.monthlyMaintenence}
               label="ApartmentType"
+              error={!!errors.monthlyMaintenence}
               onChange={handleExpectedmaintenance}
             >
               {maintenance.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
@@ -305,6 +310,7 @@ const RentalDetails = (props: Props) => {
 
               value={formData.expectedMaintenance}
               onChange={handleChange}
+              
               
               name='expectedMaintenance'
               InputProps={{
@@ -336,6 +342,7 @@ const RentalDetails = (props: Props) => {
               name='AvailableFrom'
               value={formData.AvailableFrom ? new Date(formData.AvailableFrom) : null}
               onChange={handleDateChange}
+              
 
             />
           </LocalizationProvider>
@@ -399,7 +406,7 @@ const RentalDetails = (props: Props) => {
               name='furniture'
               value={formData.furniture}
               onChange={handleChange}
-
+              error={!!errors.furniture}
               label="Furniture"
 
             >
@@ -419,6 +426,7 @@ const RentalDetails = (props: Props) => {
               value={formData.parking}
               label="ApartmentType"
               onChange={handleChange}
+              error={!!errors.parking}
 
             >
               {park.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
@@ -438,6 +446,7 @@ const RentalDetails = (props: Props) => {
             value={formData.Description}
             onChange={handleChange}
             rows={3}
+            error={!!errors.Description}
             variant='outlined' />
         </div>
 

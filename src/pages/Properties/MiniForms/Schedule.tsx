@@ -198,6 +198,7 @@ const Schedule = (props: Props) => {
             label="ApartmentType"
             name='Availability'
             onChange={handleChange}
+            error={!!errors.Availability}
             value={formData.Availability}
 
 
@@ -219,6 +220,7 @@ const Schedule = (props: Props) => {
                 label="ApartmentType"
                 name="StartTime"
                 value={formData.StartTime}
+                error={!!errors.StartTime}
                 onChange={handleChange}
                 inputProps={{
                   startAdornment: <InputAdornment position="start"><AccessTimeIcon /></InputAdornment>,
@@ -240,7 +242,7 @@ const Schedule = (props: Props) => {
                 name="EndTime"
                 value={formData.EndTime}
                 onChange={handleChange}
-
+                error={!!errors.EndTime}
 
 
               >
