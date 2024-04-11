@@ -13,6 +13,9 @@ interface Props{
 
 const ImageUpload: React.FC <Props>= (props) => {
   const [images, setImages] = useState<Image[]>([]);
+  const [errors,setErrors]=useState({
+    images:''
+  })
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -54,12 +57,15 @@ const ImageUpload: React.FC <Props>= (props) => {
   };
   const proceedNext=images.length>0;
   const handleNextClick=()=>{
+    let newErrors={...errors};
     if(proceedNext){
       props.onNextTab();
     }
     else{
       alert('Upload at least one image')
+      newErrors.images='Upload a image'
     }
+    setErrors(newErrors)
   }
 
   return (
@@ -73,8 +79,12 @@ const ImageUpload: React.FC <Props>= (props) => {
             accept="image/jpeg, image/png"
             multiple
             onChange={handleImageChange}
+            
             style={{ display: 'none' }}
           />
+          {errors.images && (
+    <div style={{ color: 'red' }}>Error: {errors.images}</div>
+)}
           <Paper
             variant="outlined"
             style={{
