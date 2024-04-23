@@ -105,7 +105,7 @@ const ViewUser = () => {
 
         <FormControl sx={{m:1}}>
            <TextField sx= {{width:300}}
-            label ="Changed Date" name="changed_by" value={user.baseTimeStamp.changed_on} />
+            label ="Changed By" name="changed_by" value={user.baseTimeStamp.changed_by} />
         </FormControl>
 
         <br/>

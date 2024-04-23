@@ -80,8 +80,6 @@ const EditUser = () => {
 
     setUserRoles(event.target.value);
     user.roles= event.target.value;
-       
-
 
   };
 
