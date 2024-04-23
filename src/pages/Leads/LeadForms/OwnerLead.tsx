@@ -111,7 +111,21 @@ const OwnerLead = () => {
 
     })
     const handleCheckbox = (checked: boolean, name: string) => {
-        setData({ ...data, [name]: checked });
+        let newData={...data};
+        if (name === 'any') {
+            newData = {
+                ...newData,
+                any: checked,
+                family: checked,
+                bachelorFemale: checked,
+                bachelorMale: checked,
+                company: checked
+            };
+        } else {
+            newData = { ...newData, [name]: checked };
+        }
+    
+        setData(newData);
     };
     const [contactNumber, setContactNumber] = useState('');
     const handleDateChange = (date: Date | null) => {
@@ -342,16 +356,16 @@ const OwnerLead = () => {
                         <FormGroup aria-label="position" row>
                             <FormControlLabel sx={{ paddingRight: '150px' }}
                                 value="top"
-                                control={<Checkbox checked={data.any} onChange={(event) => handleCheckbox(event.target.checked, 'Any')}/>}
+                                control={<Checkbox checked={data.any} onChange={(event) => handleCheckbox(event.target.checked, 'any')}/>}
                                 label="Any"
-                                name="Any"
+                                name="any"
                                 labelPlacement="end"
                             />
                             <FormControlLabel sx={{ paddingRight: '150px' }}
                                 value="start"
-                                control={<Checkbox checked={data.family} onChange={(event) => handleCheckbox(event.target.checked, 'Family')} />}
+                                control={<Checkbox checked={data.family} onChange={(event) => handleCheckbox(event.target.checked, 'family')} />}
                                 label="Family"
-                                name='Family'
+                                name='family'
                                 labelPlacement="end"
                             />
                             <FormControlLabel sx={{ paddingRight: '150px' }}
@@ -370,9 +384,9 @@ const OwnerLead = () => {
                             />
                             <FormControlLabel sx={{ paddingRight: '150px' }}
                                 value="end"
-                                control={<Checkbox checked={data.company} onChange={(event) => handleCheckbox(event.target.checked, 'Company')} />}
+                                control={<Checkbox checked={data.company} onChange={(event) => handleCheckbox(event.target.checked, 'company')} />}
                                 label="Comapny"
-                                name='Company'
+                                name='company'
                                 labelPlacement="end"
                             />
                         </FormGroup>
@@ -430,7 +444,7 @@ const OwnerLead = () => {
                         <InputLabel id="Furnishing-label">Furnishing</InputLabel>
                         <Select sx={{ width: 300 }}
                             id="Furnishing"
-                            name='Furnishing'
+                            name='furnishing'
 
                             value={data.furnishing}
                             onChange={handleChange}
