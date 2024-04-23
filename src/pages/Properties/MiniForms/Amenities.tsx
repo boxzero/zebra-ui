@@ -24,9 +24,42 @@ import { useState, ChangeEvent } from 'react';
 // import colorConfigs from "../../configs/colorConfigs";
 import colorConfigs from '../../../configs/colorConfigs';
 import { Description } from '@mui/icons-material';
+interface AmenitiesCheck{
+    selectAllAmenities:boolean,
+    lift: boolean,
+    intercom: boolean,
+    childrenPlayArea: boolean,
+    servantRoom: boolean,
+    gasPipeline: boolean,
+    rainwaterHarvesting: boolean,
+    housekeeping: boolean,
+    visitorParking: boolean,
+    internetServices: boolean,
+    clubHouse: boolean, 
+    swimmingPool: boolean,
+    fireSafety: boolean,
+    shoppingCentre: boolean,
+    park: boolean,
+    sewageTreatmentPlant: boolean,
+    powerBackup: boolean,
+}
 type Props = {
   onNextTab: () => void
   OnPrevTab: () => void
+  formData:{
+    Bathroom: string,
+    Balcony: string,
+    WaterSupply: string,
+    Gym: string,
+    NonVegAllowed: string,
+    GatedSecurity: string,
+    showProperty: string,
+    Description: string,
+    contactNumber: string
+  }
+  handleChange:(newData:any)=>void
+  amenitiesCheckBox:AmenitiesCheck,
+  setAmenitiesCheckBox:React.Dispatch<React.SetStateAction<AmenitiesCheck>>
 }
 
 const Amenities = (props: Props) => {
@@ -89,23 +122,7 @@ const Amenities = (props: Props) => {
       label: "Others"
     },
   ];
-  const [propertyShow, setpropertyShow] = useState('')
-  const [iscontactHidden, setiscontactHidden] = useState(false);
-
-
-
-  const [formData, setFormData] = useState({
-    Bathroom: '',
-    Balcony: '',
-    WaterSupply: '',
-    Gym: '',
-    NonVegAllowed: '',
-    GatedSecurity: '',
-    showProperty: '',
-    Description: '',
-    contactNumber: ''
-
-  })
+  const [formData, setFormData] = useState(props.formData)
   const [errors, setErrors] = useState({
     Bathroom: '',
     Balcony: '',
@@ -117,18 +134,11 @@ const Amenities = (props: Props) => {
     Description: '',
 
   })
-  const handleshowProperty = (event: SelectChangeEvent) => {
-    const option = event.target.value as string;
-    setpropertyShow(option);
-    setFormData({ ...formData, showProperty: option });
-    if (option === '2')
-      setiscontactHidden(false);
-    else setiscontactHidden(true);
-  }
   const [isValid, setIsValid] = useState(false);
   const handleChange = (event: SelectChangeEvent<string> | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name as string]: value })
+    props.handleChange({...formData,[name as string]:value})
     setIsValid(
       formData.Bathroom !== '' &&
       formData.Balcony !== '' &&
@@ -136,8 +146,8 @@ const Amenities = (props: Props) => {
       formData.Gym !== '' &&
       formData.NonVegAllowed !== '' &&
       formData.GatedSecurity !== '' &&
-      formData.showProperty !== '' &&
-      formData.Description !== ''
+      formData.showProperty !== '' 
+      
     )
   }
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -145,38 +155,35 @@ const Amenities = (props: Props) => {
 
     event.preventDefault();
     let newErrors = { ...errors };
-    if (!formData.Bathroom) {
+    if (!props.formData.Bathroom) {
       newErrors.Bathroom = 'No of bathrooms are required'
       isValdiForm = false;
     }
-    if (!formData.Balcony) {
+    if (!props.formData.Balcony) {
       newErrors.Balcony = 'No of Balcony are required'
       isValdiForm = false;
     }
-    if (!formData.WaterSupply) {
+    if (!props.formData.WaterSupply) {
       newErrors.WaterSupply = 'WaterSupply is required'
       isValdiForm = false;
     }
-    if (!formData.Gym) {
+    if (!props.formData.Gym) {
       newErrors.Gym = 'Gym is required'
       isValdiForm = false;
     }
-    if (!formData.NonVegAllowed) {
+    if (!props.formData.NonVegAllowed) {
       newErrors.NonVegAllowed = 'NonVegAllowed required'
       isValdiForm = false;
     }
-    if (!formData.GatedSecurity) {
+    if (!props.formData.GatedSecurity) {
       newErrors.GatedSecurity = 'GatedSecurity required'
       isValdiForm = false;
     }
-    if (!formData.showProperty) {
+    if (!props.formData.showProperty) {
       newErrors.showProperty = 'showProperty required'
       isValdiForm = false;
     }
-    if (!formData.Description) {
-      newErrors.Description = 'Description required'
-      isValdiForm = false;
-    }
+   
 
     setErrors(newErrors)
     if (isValdiForm) props.onNextTab();
@@ -195,7 +202,7 @@ const Amenities = (props: Props) => {
     housekeeping: false,
     visitorParking: false,
     internetServices: false,
-    clubHouse: false,
+    clubHouse: false, 
     swimmingPool: false,
     fireSafety: false,
     shoppingCentre: false,
@@ -207,28 +214,32 @@ const Amenities = (props: Props) => {
   const handleAllAmenitiesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     setAllAmenitiesChecked(isChecked);
-    let updatedAmenities = { ...amenities };
+    let updatedAmenities = { ...amenities, selectAllAmenities: isChecked };
     for (const key in updatedAmenities) {
       if (Object.prototype.hasOwnProperty.call(updatedAmenities, key)) {
         updatedAmenities[key as keyof typeof amenities] = isChecked;
       }
     }
     setAmenities(updatedAmenities);
+    props.setAmenitiesCheckBox(updatedAmenities);
+    
   };
 
-  const handleSingleAmenityChange = (key: keyof typeof amenities, checked: boolean) => {
-    setAmenities({ ...amenities, [key]: checked });
+  const handleSingleAmenityChange = (key: keyof AmenitiesCheck, checked: boolean) => {
+    if (key !== "selectAllAmenities"){
+
+      setAmenities(prevState => ({
+        ...prevState,
+        [key]: checked
+      }));
+    }
+    props.setAmenitiesCheckBox(prevState => ({
+      ...prevState,
+      [key]: checked
+    }));
+  
   };
-  const [water, setWater] = useState('');
-
-  const [property, setProperty] = useState('');
-  const propertyHandleChange = (event: SelectChangeEvent) => {
-    setProperty(event.target.value);
-  }
-
-  const waterChangeHandler = (event: SelectChangeEvent) => {
-    setWater(event.target.value);
-  }
+  
 
   return (
     <form onSubmit={handleSubmit}>
@@ -242,7 +253,7 @@ const Amenities = (props: Props) => {
 
             <TextField
               label="Bathrooms"
-              value={formData.Bathroom}
+              value={props.formData.Bathroom}
               name='Bathroom'
               onChange={handleChange}
               error={!!errors.Bathroom}
@@ -264,7 +275,7 @@ const Amenities = (props: Props) => {
               label="Balcony"
               id="outlined-start-adornment"
               sx={{ width: 300 }}
-              value={formData.Balcony}
+              value={props.formData.Balcony}
               error={!!errors.Balcony}
               name='Balcony'
               onChange={handleChange}
@@ -284,7 +295,7 @@ const Amenities = (props: Props) => {
               <Select sx={{ width: 300 }}
                 labelId="demo-select-small"
                 id="demo-select-small"
-                value={formData.WaterSupply}
+                value={props.formData.WaterSupply}
                 error={!!errors.WaterSupply}
                 label="ApartmentType"
                 name='WaterSupply'
@@ -310,8 +321,8 @@ const Amenities = (props: Props) => {
               <Select sx={{ width: 300 }}
                 labelId="demo-select-small"
                 id="demo-select-small"
-                error={!!errors.Bathroom}
-                value={formData.Bathroom}
+                error={!!errors.Gym}
+                value={props.formData.Gym}
                 label="ApartmentType"
                 name='Gym'
                 onChange={handleChange}
@@ -329,7 +340,7 @@ const Amenities = (props: Props) => {
               <Select sx={{ width: 300 }}
                 labelId="demo-select-small"
                 id="demo-select-small"
-                value={formData.NonVegAllowed}
+                value={props.formData.NonVegAllowed}
                 error={!!errors.NonVegAllowed}
                 label="ApartmentType"
                 name='NonVegAllowed'
@@ -348,7 +359,7 @@ const Amenities = (props: Props) => {
               <Select sx={{ width: 300 }}
                 labelId="demo-select-small"
                 id="demo-select-small"
-                value={formData.GatedSecurity}
+                value={props.formData.GatedSecurity}
                 error={!!errors.GatedSecurity}
                 label="ApartmentType"
                 name='GatedSecurity'
@@ -369,11 +380,11 @@ const Amenities = (props: Props) => {
 
                 labelId="demo-select-small"
                 id="demo-select-small"
-                value={formData.showProperty}
+                value={props.formData.showProperty}
                 error={!!errors.showProperty}
                 label="Furniture"
                 name='showProperty'
-                onChange={handleshowProperty}
+                onChange={handleChange}
               >
                 {properties.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
               </Select>
@@ -384,11 +395,11 @@ const Amenities = (props: Props) => {
           <Grid item xs={5} sx={{ m: 1, paddingLeft: '200px' }}>
 
             <FormControl sx={{ m: 1 }}>
-              {iscontactHidden && (<TextField
+              {props.formData.showProperty==='2' && (<TextField
                 label="Contact Number"
                 id="outlined-start-adornment"
                 name='contactNumber'
-                value={formData.contactNumber}
+                value={props.formData.contactNumber}
                 onChange={handleChange}
                 sx={{ width: 300 }}
 
@@ -441,7 +452,8 @@ const Amenities = (props: Props) => {
                 {key === 'sewageTreatmentPlant' && <PestControlRodentIcon />}
                 {key === 'powerBackup' && <PowerIcon />}
                 <FormControlLabel
-                  control={<Checkbox checked={value} onChange={(e) => handleSingleAmenityChange(key as keyof typeof amenities, e.target.checked)} />}
+                  control={<Checkbox checked={props.amenitiesCheckBox[key as keyof AmenitiesCheck]}
+                  onChange={(e) => handleSingleAmenityChange(key as keyof AmenitiesCheck, e.target.checked)}  />}
                   label={key}
                   labelPlacement="end"
                 />

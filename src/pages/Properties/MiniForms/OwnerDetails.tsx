@@ -8,16 +8,18 @@ import FormLabel from '@mui/material/FormLabel';
 type Props = {
   onNextTab: () => void
   OnPrevTab:()=>void
+  formData:{
+    firstName: string,
+    lastName: string,
+    contactNumber: string,
+    Email: string,
+    Notes:string
+  }
+  handleChange:(newData:any)=>void;
 }
 
 function OwnerDetails(props: Props) {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    contactNumber: '',
-    Email: '',
-    Notes: ''
-  })
+  const [formData, setFormData] = useState((props.formData))
   const [errors, setErrors] = useState({
     firstName: '',
     lastName: '',
@@ -26,10 +28,12 @@ function OwnerDetails(props: Props) {
     Notes: ''
   })
   const [isValid, setIsValid] = useState(false);
-  const [contactNumber, setContactNumber] = React.useState('');
+  
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name as string]: value })
+    setFormData({ ...formData, [name]: value });
+    props.handleChange({...props.formData,[name]:value})
+    
     setIsValid(
       formData.firstName !== '' &&
       formData.lastName !== '' &&
@@ -39,32 +43,31 @@ function OwnerDetails(props: Props) {
     )
   }
   const handleContactChange = (newContactNumber: string) => {
-    
-    setContactNumber(newContactNumber)
-    setFormData({ ...formData, contactNumber: newContactNumber })
+    setFormData({ ...formData, contactNumber: newContactNumber });
+    props.handleChange({...props.formData,contactNumber:newContactNumber})
   };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     let newErrors = { ...errors };
     const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     let isValidForm = true;
-    if (!formData.firstName) {
+    if (!props.formData.firstName) {
       newErrors.firstName = 'First Nameis required';
       isValidForm = false;
     }
-    if (!formData.lastName) {
+    if (!props.formData.lastName) {
       newErrors.lastName = 'BHK type is required';
       isValidForm = false;
     }
-    if (!formData.contactNumber) {
+    if (!props.formData.contactNumber) {
       newErrors.contactNumber = 'No.of floors required';
       isValidForm = false;
     }
-    if (!formData.Email || !emailRegex.test(formData.Email)) {
+    if (!props.formData.Email ) {
       newErrors.Email = 'No.of total floors required';
       isValidForm = false;
     }
-    if (!formData.Notes) {
+    if (!props.formData.Notes) {
       newErrors.Notes = 'propertyAge is required required';
       isValidForm = false;
     }
@@ -93,7 +96,7 @@ function OwnerDetails(props: Props) {
             <TextField
               label="First Name"
               name='firstName'
-              value={formData.firstName}
+              value={props.formData.firstName}
               onChange={handleChange}
               error={!!errors.firstName}
               id="outlined-start-adornment"
@@ -106,7 +109,7 @@ function OwnerDetails(props: Props) {
             <TextField
               label="Last Name"
               name='lastName'
-              value={formData.lastName}
+              value={props.formData.lastName}
               onChange={handleChange}
               error={!!errors.lastName}
               id="outlined-start-adornment"
@@ -118,7 +121,7 @@ function OwnerDetails(props: Props) {
         <br />
         <div>
         <FormControl sx={{m:1}}>
-         <MuiTelInput label='Phone' defaultCountry='IN' fullWidth value={formData.contactNumber} name='contactNumber' onChange={handleContactChange} error={!!errors.contactNumber} sx={{width: 300}}/>
+         <MuiTelInput label='Phone' defaultCountry='IN' fullWidth value={props.formData.contactNumber} name='contactNumber' onChange={handleContactChange} error={!!errors.contactNumber} sx={{width: 300}}/>
       </FormControl>
         </div>
         <br />
@@ -128,7 +131,7 @@ function OwnerDetails(props: Props) {
             <TextField
               label="Email Id"
               name='Email'
-              value={formData.Email}
+              value={props.formData.Email}
               onChange={handleChange}
               error={!!errors.Email}
               id="outlined-start-adornment"
@@ -144,7 +147,7 @@ function OwnerDetails(props: Props) {
             multiline
             label='Notes'
             name='Notes'
-            value={formData.Notes}
+            value={props.formData.Notes}
             onChange={handleChange}
             error={!!errors.Notes}
             rows={3}
