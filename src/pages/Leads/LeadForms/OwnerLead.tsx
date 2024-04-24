@@ -5,66 +5,89 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import axios from 'axios';
 const OwnerLead = () => {
-      const leadSource = [
+    const leadSource = [
         {
-          value: "Facebook",
-          label: "Facebook"
+            value: "FACEBOOK",
+            label: "Facebook"
         },
         {
-          value: "Instagram",
-          label: "Instagram"
+            value: "INSTAGRAM",
+            label: "Instagram"
         },
         {
-            value: "Reference",
+            value: "REFERENCE",
             label: "Reference"
-          },
-          {
-            value: "Website",
+        },
+        {
+            value: "WEBSITE",
             label: "Website"
-          },
-          {
-            value: "Other",
+        },
+        {
+            value: "OTHER",
             label: "Other"
-          }
-      ];
+        }
+    ];
+    const preferredTenants=[
+        {
+            value:"BACHELORS",
+            label:"Bachelors"
+        },
+        {
+            value:"BACHELOR_GIRLS",
+            label:"Bachelor Girls"
+        },
+        {
+            value:"BACHELOR_BOYS",
+            label:"Bachelor Boys"
+        },
+        {
+            value:"FAMILY",
+            label:"Family"
+        },
+        {
+            value:"ANY",
+            label:"Any"
+        },
+    ]
     const furnitures = [
         {
-          value: "1",
-          label: "Fully furnished"
+            value: "1",
+            label: "Fully furnished"
         },
         {
-          value: "2",
-          label: "Semi-furnished"
+            value: "2",
+            label: "Semi-furnished"
         },
-      ];
-      const bhkTypes = [
+    ];
+    const bhkTypes = [
         {
-          value: "1rk",
-          label: "1 RK"
-        },
-        {
-          value: "1bhk",
-          label: "1 BHK"
+            value: "1rk",
+            label: "1 RK"
         },
         {
-          value: "2bhk",
-          label: "2 BHK"
+            value: "1bhk",
+            label: "1 BHK"
         },
         {
-          value: "3bhk",
-          label: "3 BHK"
+            value: "2bhk",
+            label: "2 BHK"
         },
         {
-          value: "4bhk",
-          label: "4 BHK"
+            value: "3bhk",
+            label: "3 BHK"
         },
         {
-          value: "4plusbhk",
-          label: "4+ BHK"
+            value: "4bhk",
+            label: "4 BHK"
+        },
+        {
+            value: "4plusbhk",
+            label: "4+ BHK"
         }
-      ];
-      const locality = [
+    ];
+    const locality = [
         'Bellandur',
         'Kadubeesanahalli',
         'Sarjapur',
@@ -78,8 +101,8 @@ const OwnerLead = () => {
         'Carmeralum',
         'Iblur Lake'
     ];
-    
-      
+
+
     const [data, setData] = useState({
         firstName: '',
         lastName: '',
@@ -91,88 +114,93 @@ const OwnerLead = () => {
         bhkType: '',
         apartmentName: '',
         locality: '',
-        leadType:'OWNER',
+        leadType: 'OWNER',
         googleMapLocationUrl: '',
         expectedRent: '',
         expectedDeposit: '',
         furnishing: '',
-        availableFrom:'',
+        availableFrom: '',
         isEmailVerified: false,
         isPhoneVerified: false,
+        preferredTenants:'',
         
-        any: false,
-        family: false,
-        bachelorFemale: false,
-        bachelorMale: false,
-        company: false,
-        
+
         isNonVegAllowed: false,
         isPetAllowed: false,
 
     })
     const handleCheckbox = (checked: boolean, name: string) => {
-        let newData={...data};
-        if (name === 'any') {
-            newData = {
-                ...newData,
-                any: checked,
-                family: checked,
-                bachelorFemale: checked,
-                bachelorMale: checked,
-                company: checked
-            };
-        } else {
-            newData = { ...newData, [name]: checked };
-        }
-    
+        let newData = { ...data };
+        
+        
+        newData = { ...newData, [name]: checked };
+        
+
         setData(newData);
     };
     const [contactNumber, setContactNumber] = useState('');
     const handleDateChange = (date: Date | null) => {
         if (date) {
-          setData({ ...data, availableFrom: date.toISOString() }); 
-          setIsValid(data.availableFrom !== ''); 
-          console.log(date)
+            setData({ ...data, availableFrom: date.toISOString() });
+            setIsValid(data.availableFrom !== '');
+            console.log(date)
         }
-      };
+    };
     const handleContactChange = (newContactNumber: string) => {
-    
+
         setContactNumber(newContactNumber)
         setData({ ...data, contactNumber: newContactNumber })
-      };
+    };
     const [isValid, setIsValid] = useState(false);
-    const [errors,setErrors]=useState({
+    const [errors, setErrors] = useState({
         firstName: '',
         lastName: '',
         emailId: '',
         contactNumber: '',
     })
-    const handleSubmit=(event:React.FormEvent<HTMLFormElement>)=>{
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        let newErrors={...errors}
-        let valid=true;
-        if(!data.firstName){
-            valid=false;
-            newErrors.firstName="First Name is required"
+        let newErrors = { ...errors }
+        let valid = true;
+        if (!data.firstName) {
+            valid = false;
+            newErrors.firstName = "First Name is required"
         }
-        if(!data.lastName){
-            valid=false;
-            newErrors.lastName="Last Name is required"
+        if (!data.lastName) {
+            valid = false;
+            newErrors.lastName = "Last Name is required"
         }
-        if(!data.emailId){
-            valid=false;
-            newErrors.emailId="E-mail is required"
+        if (!data.emailId) {
+            valid = false;
+            newErrors.emailId = "E-mail is required"
         }
-        if(!data.contactNumber){
-            valid=false;
-            newErrors.contactNumber="Contact Number is required"
+        if (!data.contactNumber) {
+            valid = false;
+            newErrors.contactNumber = "Contact Number is required"
         }
         setErrors(newErrors)
-        if(valid){
-            console.log({data});
+        if (valid) {
+            console.log({ data });
         }
-        else{
+        else {
             alert("Fill all the details")
+        }
+    }
+    const handleOwnerLead=async (e:{preventDefault:()=>void})=>{
+        e.preventDefault();
+        const access_token=localStorage.getItem('access_token');
+        const headers={
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${access_token}`
+        }
+        try{
+            const response=await axios.post("http://localhost:9091/owner-leads/v1/register-owner-lead",data,{headers})
+            console.log(response.data);
+            alert("Lead Created Successfully");
+
+        }
+        catch(error){
+            console.log("Error creating lead" , error)
         }
     }
     const handleChange = (event: any) => {
@@ -187,6 +215,9 @@ const OwnerLead = () => {
     }
     return (
         <div>
+            <Box component='form' onSubmit={handleOwnerLead} noValidate sx={{mt:1}}>
+
+
             <form onSubmit={handleSubmit}>
 
                 <Grid container my={4} alignItems="center" sx={{ m: 1 }}>
@@ -229,10 +260,10 @@ const OwnerLead = () => {
                     <Grid item xs={3.5} sx={{ paddingRight: '150px' }}>
 
                         <FormControl sx={{ m: 1 }}>
-                            <MuiTelInput label='Contact Number' required defaultCountry='IN' fullWidth name='contactNumber'onChange={handleContactChange}
-                            value={data.contactNumber}
+                            <MuiTelInput label='Contact Number' required defaultCountry='IN' fullWidth name='contactNumber' onChange={handleContactChange}
+                                value={data.contactNumber}
 
-                            error={!!errors.contactNumber} sx={{ width: 300 }} />
+                                error={!!errors.contactNumber} sx={{ width: 300 }} />
                         </FormControl>
                     </Grid>
 
@@ -245,7 +276,7 @@ const OwnerLead = () => {
                             label="Email Verified"
                             labelPlacement="end"
                             name='isEmailVerified'
-                            
+
                         />
                     </FormControl>
                     <FormControl sx={{ m: 1 }}>
@@ -284,7 +315,7 @@ const OwnerLead = () => {
                         />
                     </Grid>
                 </Grid>
-                
+
                 <Grid sx={{ m: 1 }}>
                     <FormControl sx={{ m: 1 }}>
                         <InputLabel id="propertyType-label">Property Type</InputLabel>
@@ -319,26 +350,32 @@ const OwnerLead = () => {
                     <TextField
                         label="Apartment Name"
                         name='apartmentName'
-                       
+
                         value={data.apartmentName}
-                         onChange={handleChange}
+                        onChange={handleChange}
                         id="outlined-start-adornment"
                         sx={{ width: 300, m: 1 }}
                     />
                 </Grid>
                 <Grid sx={{ m: 1 }}>
-                    
-                    
+
+
                     <FormControl sx={{ m: 1 }}>
-                        <InputLabel id="BHKTYPE-label">Locality</InputLabel>
-                        <Select sx={{ width: 300 }}
-                            id="bhktype-type"
-                            name='bhkType'
+                        <InputLabel id="locality-label">Locality</InputLabel>
+                        <Select
+                            sx={{ width: 300 }}
+                            id="locality-type"
+                            name='locality'
                             value={data.locality}
                             onChange={handleChange}
-                            label='BHKType'
+                            label='Locality'
                         >
-                            {locality.map((value, index) => <MenuItem >{value}</MenuItem>)}
+                            {/* Mapping over the locality array and rendering a MenuItem for each locality option */}
+                            {locality.map((value, index) => (
+                                <MenuItem key={index} value={value}>
+                                    {value}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                     <TextField
@@ -351,45 +388,17 @@ const OwnerLead = () => {
                     />
                 </Grid>
                 <Grid sx={{ m: 1 }}>
-                    <FormControl component="fieldset" sx={{ m: 1 }}  >
-                        <FormLabel component="legend" required>Preferred Tenants</FormLabel>
-                        <FormGroup aria-label="position" row>
-                            <FormControlLabel sx={{ paddingRight: '150px' }}
-                                value="top"
-                                control={<Checkbox checked={data.any} onChange={(event) => handleCheckbox(event.target.checked, 'any')}/>}
-                                label="Any"
-                                name="any"
-                                labelPlacement="end"
-                            />
-                            <FormControlLabel sx={{ paddingRight: '150px' }}
-                                value="start"
-                                control={<Checkbox checked={data.family} onChange={(event) => handleCheckbox(event.target.checked, 'family')} />}
-                                label="Family"
-                                name='family'
-                                labelPlacement="end"
-                            />
-                            <FormControlLabel sx={{ paddingRight: '150px' }}
-                                value="bottom"
-                                control={<Checkbox checked={data.bachelorFemale} onChange={(event) => handleCheckbox(event.target.checked, 'bachelorFemale')} />}
-                                label="Bachelor Female"
-                                name='bachelorFemale'
-                                labelPlacement="end"
-                            />
-                            <FormControlLabel sx={{ paddingRight: '150px' }}
-                                value="end"
-                                control={<Checkbox checked={data.bachelorMale} onChange={(event) => handleCheckbox(event.target.checked, 'bachelorMale')} />}
-                                label="Bachelor Male"
-                                name='bachelorMale'
-                                labelPlacement="end"
-                            />
-                            <FormControlLabel sx={{ paddingRight: '150px' }}
-                                value="end"
-                                control={<Checkbox checked={data.company} onChange={(event) => handleCheckbox(event.target.checked, 'company')} />}
-                                label="Comapny"
-                                name='company'
-                                labelPlacement="end"
-                            />
-                        </FormGroup>
+                <FormControl sx={{ m: 1 }}>
+                        <InputLabel id="preferredTenants-label">Preferred Tenanats</InputLabel>
+                        <Select sx={{ width: 300 }}
+                            id="preferredTenants-type"
+                            name='preferredTenants'
+                            value={data.preferredTenants}
+                            onChange={handleChange}
+                            label='BHKType'
+                        >
+                            {preferredTenants.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
+                        </Select>
                     </FormControl>
                 </Grid>
                 <Grid sx={{ m: 1 }} >
@@ -404,7 +413,7 @@ const OwnerLead = () => {
                             />
                             <FormControlLabel sx={{ paddingRight: '150px' }}
                                 value="end"
-                                control={<Checkbox checked={data.isPetAllowed} onChange={(event) => handleCheckbox(event.target.checked, 'isPetAllowed')}/>}
+                                control={<Checkbox checked={data.isPetAllowed} onChange={(event) => handleCheckbox(event.target.checked, 'isPetAllowed')} />}
                                 label="Is Pet Allowed"
                                 name='isPetAllowed'
                                 labelPlacement="end"
@@ -484,6 +493,7 @@ const OwnerLead = () => {
                     </FormControl>
                 </Grid>
             </form>
+            </Box>
         </div >
     )
 }
