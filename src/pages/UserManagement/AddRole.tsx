@@ -33,7 +33,7 @@ const AddRole = (props: Props) => {
       const response = await axios.post('http://localhost:9091/roles/v1/register-role',role,{headers});
       console.log(response.data)
       alert("Role created successfully!");
-      navigate("/users/viewallusers");
+      navigate("/users/viewallroles");
     }catch(error) {
         console.log('Error in creating role',error)
     }

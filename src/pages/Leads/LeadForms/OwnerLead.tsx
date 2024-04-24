@@ -6,7 +6,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 const OwnerLead = () => {
+    const navigate = useNavigate();
+    
     const leadSource = [
         {
             value: "FACEBOOK",
@@ -53,37 +57,37 @@ const OwnerLead = () => {
     ]
     const furnitures = [
         {
-            value: "1",
-            label: "Fully furnished"
+            value: "Fully Furnished",
+            label: "Fully Furnished"
         },
         {
-            value: "2",
-            label: "Semi-furnished"
+            value: "Semi Furnished",
+            label: "Semi Furnished"
         },
     ];
     const bhkTypes = [
         {
-            value: "1rk",
+            value: "1Rk",
             label: "1 RK"
         },
         {
-            value: "1bhk",
+            value: "1Bhk",
             label: "1 BHK"
         },
         {
-            value: "2bhk",
+            value: "2Bhk",
             label: "2 BHK"
         },
         {
-            value: "3bhk",
+            value: "3Bhk",
             label: "3 BHK"
         },
         {
-            value: "4bhk",
+            value: "4Bhk",
             label: "4 BHK"
         },
         {
-            value: "4plusbhk",
+            value: "4+Bhk",
             label: "4+ BHK"
         }
     ];
@@ -123,19 +127,13 @@ const OwnerLead = () => {
         isEmailVerified: false,
         isPhoneVerified: false,
         preferredTenants:'',
-        
-
         isNonVegAllowed: false,
         isPetAllowed: false,
 
     })
     const handleCheckbox = (checked: boolean, name: string) => {
         let newData = { ...data };
-        
-        
         newData = { ...newData, [name]: checked };
-        
-
         setData(newData);
     };
     const [contactNumber, setContactNumber] = useState('');
@@ -186,17 +184,23 @@ const OwnerLead = () => {
             alert("Fill all the details")
         }
     }
-    const handleOwnerLead=async (e:{preventDefault:()=>void})=>{
+    const handleOwnerLead = async(e:{preventDefault:()=>void}) => {
         e.preventDefault();
+        alert("Inside handleOwnerLead")
         const access_token=localStorage.getItem('access_token');
+        if(access_token===null){
+            alert("Please login first");
+            navigate("/login");
+        }
         const headers={
             'Content-Type':'application/json',
             'Authorization':`Bearer ${access_token}`
         }
+        console.log(data);
         try{
             const response=await axios.post("http://localhost:9091/owner-leads/v1/register-owner-lead",data,{headers})
             console.log(response.data);
-            alert("Lead Created Successfully");
+            alert(response.data);
 
         }
         catch(error){
@@ -216,9 +220,6 @@ const OwnerLead = () => {
     return (
         <div>
             <Box component='form' onSubmit={handleOwnerLead} noValidate sx={{mt:1}}>
-
-
-            <form onSubmit={handleSubmit}>
 
                 <Grid container my={4} alignItems="center" sx={{ m: 1 }}>
                     <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
@@ -327,11 +328,11 @@ const OwnerLead = () => {
 
                             label='PropertyType'
                         >
-                            <MenuItem value="gated_apartment">Gated Apartment</MenuItem>
-                            <MenuItem value="gated_scoiety">Gated Society</MenuItem>
-                            <MenuItem value="villa">Villa</MenuItem>
-                            <MenuItem value="standalone_building">Standalone Building</MenuItem>
-                            <MenuItem value="plot">Plot</MenuItem>
+                            <MenuItem value="GATED_APARTMENT">Gated Apartment</MenuItem>
+                            <MenuItem value="GATED_SOCIETY">Gated Society</MenuItem>
+                            <MenuItem value="VILLA">Villa</MenuItem>
+                            <MenuItem value="STANDALONE_BUILDING">Standalone Building</MenuItem>
+                            <MenuItem value="PLOT">Plot</MenuItem>
 
                         </Select>
                     </FormControl>
@@ -492,7 +493,7 @@ const OwnerLead = () => {
                         </Button>
                     </FormControl>
                 </Grid>
-            </form>
+            
             </Box>
         </div >
     )
