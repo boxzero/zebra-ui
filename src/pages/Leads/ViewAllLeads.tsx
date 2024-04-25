@@ -1,5 +1,9 @@
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import React, { ReactNode, useState } from 'react'
+import TenantLeadsList from './ViewerForms/TenantLeadsList';
+import OwnerLeadsList from './ViewerForms/OwnerLeadsList';
+import SellerLeadsList from './ViewerForms/SellerLeadsList';
+import BuyerLeadsList from './ViewerForms/BuyerLeadsList';
 
 type Props = {}
 
@@ -11,13 +15,13 @@ const ViewAllLeads = (props: Props) => {
     // Load the form based on the selected value
     switch (selectedValue) {
       case "tenant":
-        return <TenantLead/> ;
+        return <TenantLeadsList/> ;
       case "owner":
-        return <OwnerLead/>
+        return <OwnerLeadsList/>
       case "seller":
-        return <SellerLead/>
+        return <SellerLeadsList/>
       case "buyer":
-        return <BuyerLead/>
+        return <BuyerLeadsList/>
     }
   };
 
