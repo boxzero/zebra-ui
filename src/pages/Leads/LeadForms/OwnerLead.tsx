@@ -186,7 +186,7 @@ const OwnerLead = () => {
     }
     const handleOwnerLead = async(e:{preventDefault:()=>void}) => {
         e.preventDefault();
-        alert("Inside handleOwnerLead")
+
         const access_token=localStorage.getItem('access_token');
         if(access_token===null){
             alert("Please login first");
@@ -201,6 +201,7 @@ const OwnerLead = () => {
             const response=await axios.post("http://localhost:9091/owner-leads/v1/register-owner-lead",data,{headers})
             console.log(response.data);
             alert(response.data);
+            navigate("/leads/allleads");
 
         }
         catch(error){
