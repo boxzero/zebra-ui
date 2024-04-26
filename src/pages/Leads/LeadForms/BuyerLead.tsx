@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, ChangeEvent } from 'react';
-import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, Autocomplete, TextField, FormControlLabel, Checkbox, Stack, Chip, Button, ButtonGroup, Typography, Grid, FormGroup, FormLabel, FormHelperText, Box,ListItemText,OutlinedInput } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, Autocomplete, TextField, FormControlLabel, Checkbox, Stack, Chip, Button, ButtonGroup, Typography, Grid, FormGroup, FormLabel, FormHelperText, Box, ListItemText, OutlinedInput } from '@mui/material';
 import { MuiTelInput } from 'mui-tel-input';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -67,7 +67,7 @@ const BuyerLead = () => {
             label: "4+ BHK"
         }
     ];
-    
+
     const preferredLocationsArray = [
         'Bellandur',
         'Kadubeesanahalli',
@@ -82,6 +82,12 @@ const BuyerLead = () => {
         'Carmeralum',
         'Iblur Lake'
     ];
+    const propertyTypeArray=[
+        'Gated Apartment',
+        'Gated Society',
+        'Villa','Standalone Building'
+        ,'Plot'
+    ]
 
 
     const [data, setData] = useState({
@@ -91,7 +97,7 @@ const BuyerLead = () => {
         contactNumber: '',
         leadSource: '',
         notes: '',
-        propertyType: '',
+        propertyType: [],
         leadType: 'BUYER',
         minBudget: '',
         maxBudget: '',
@@ -99,21 +105,26 @@ const BuyerLead = () => {
         isEmailVerified: false,
         isPhoneVerified: false,
 
-        preferredLocations:[],
-        isDateFlexible:false
+        preferredLocations: [],
+        isDateFlexible: false
 
     })
     const handleDateChange = (date: Date | null) => {
         if (date) {
-          setData({ ...data, occupancyDate: date.toISOString() }); 
-          setIsValid(data.occupancyDate !== ''); 
-          console.log(date)
+            setData({ ...data, occupancyDate: date.toISOString() });
+            setIsValid(data.occupancyDate !== '');
+            console.log(date)
         }
-      };
+    };
     const [preferredLocations, setPreferredLocations] = useState([]);
+    const [propertyType, setPropertyType] = useState([]);
     const handlePreferredLocationChange = (event: any) => {
         setPreferredLocations(event.target.value);
-        data.preferredLocations= event.target.value;
+        data.preferredLocations = event.target.value;
+    }
+    const handlePropertyTypeChange = (event: any) => {
+        setPropertyType(event.target.value);
+        data.propertyType = event.target.value;
     }
     const handleCheckbox = (checked: boolean, name: string) => {
         let newData = { ...data };
@@ -271,30 +282,33 @@ const BuyerLead = () => {
                         />
                     </Grid>
                     <Grid sx={{ m: 1 }}>
-                    <FormControl sx={{ m: 1 }}>
-                        <InputLabel id="propertyType-label">Property Type</InputLabel>
-                        <Select sx={{ width: 300 }}
-                            id="property-type"
-                            name='propertyType'
-                            value={data.propertyType}
-                            onChange={handleChange}
+                        <FormControl sx={{ m: 1 }}>
+                            <InputLabel id="propertyType-label">Property Type</InputLabel>
+                            <Select sx={{ width: 300 }}
+                                fullWidth
+                                labelId="demo-multiple-checkbox-label"
+                                id="demo-multiple-checkbox"
+                                multiple
+                                value={propertyType}
+                                onChange={handlePropertyTypeChange}
+                                input={<OutlinedInput label="Property Type" notched />}
+                                renderValue={(selected) => selected.join(', ')}
+                            >
+                                {propertyTypeArray.map((name) => (
+                                <MenuItem key={name} value={name}>
+                                    <Checkbox checked={propertyType.findIndex((item: any) => item === name) > -1} />
+                                    <ListItemText primary={name} />
+                                </MenuItem>
+                            ))}
 
-                            label='PropertyType'
-                        >
-                            <MenuItem value="gated_apartment">Gated Apartment</MenuItem>
-                            <MenuItem value="gated_scoiety">Gated Society</MenuItem>
-                            <MenuItem value="villa">Villa</MenuItem>
-                            <MenuItem value="standalone_building">Standalone Building</MenuItem>
-                            <MenuItem value="plot">Plot</MenuItem>
-
-                        </Select>
-                    </FormControl>
+                            </Select>
+                        </FormControl>
 
 
+                    </Grid>
                 </Grid>
-                </Grid>
 
-                
+
 
                 <Grid sx={{ m: 1 }}>
                     <TextField
@@ -334,16 +348,16 @@ const BuyerLead = () => {
 
                             />
                         </LocalizationProvider>
-                    <FormControl sx={{ m: 1 }}>
-                        <FormControlLabel
+                        <FormControl sx={{ m: 1 }}>
+                            <FormControlLabel
 
-                            control={<Checkbox checked={data.isDateFlexible} onChange={(event) => handleCheckbox(event.target.checked, 'isDateFlexible')} />}
-                            label="Is Date Flexible"
-                            labelPlacement="end"
-                            name='isEmailVerified'
+                                control={<Checkbox checked={data.isDateFlexible} onChange={(event) => handleCheckbox(event.target.checked, 'isDateFlexible')} />}
+                                label="Is Date Flexible"
+                                labelPlacement="end"
+                                name='isEmailVerified'
 
-                        />
-                    </FormControl>
+                            />
+                        </FormControl>
                     </Box>
                     <FormControl sx={{ m: 1 }}>
                         <InputLabel id="demo-multiple-checkbox-label" shrink >Preferred Locations</InputLabel>
@@ -356,7 +370,7 @@ const BuyerLead = () => {
                             onChange={handlePreferredLocationChange}
                             input={<OutlinedInput label="Preferred Locations" notched />}
                             renderValue={(selected) => selected.join(', ')}
-                            
+
                         >
                             {preferredLocationsArray.map((name) => (
                                 <MenuItem key={name} value={name}>
