@@ -201,6 +201,7 @@ const OwnerLead = () => {
             const response = await axios.post("http://localhost:9091/owner-leads/v1/register-owner-lead", data, { headers })
             console.log(response.data);
             alert(response.data);
+            navigate("/leads/allleads");
 
         }
         catch (error) {
