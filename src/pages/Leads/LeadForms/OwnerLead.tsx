@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const OwnerLead = () => {
     const navigate = useNavigate();
-    
+
     const leadSource = [
         {
             value: "FACEBOOK",
@@ -33,26 +33,26 @@ const OwnerLead = () => {
             label: "Other"
         }
     ];
-    const preferredTenants=[
+    const preferredTenants = [
         {
-            value:"BACHELORS",
-            label:"Bachelors"
+            value: "BACHELORS",
+            label: "Bachelors"
         },
         {
-            value:"BACHELOR_GIRLS",
-            label:"Bachelor Girls"
+            value: "BACHELOR_GIRLS",
+            label: "Bachelor Girls"
         },
         {
-            value:"BACHELOR_BOYS",
-            label:"Bachelor Boys"
+            value: "BACHELOR_BOYS",
+            label: "Bachelor Boys"
         },
         {
-            value:"FAMILY",
-            label:"Family"
+            value: "FAMILY",
+            label: "Family"
         },
         {
-            value:"ANY",
-            label:"Any"
+            value: "ANY",
+            label: "Any"
         },
     ]
     const furnitures = [
@@ -126,7 +126,7 @@ const OwnerLead = () => {
         availableFrom: '',
         isEmailVerified: false,
         isPhoneVerified: false,
-        preferredTenants:'',
+        preferredTenants: '',
         isNonVegAllowed: false,
         isPetAllowed: false,
 
@@ -184,28 +184,28 @@ const OwnerLead = () => {
             alert("Fill all the details")
         }
     }
-    const handleOwnerLead = async(e:{preventDefault:()=>void}) => {
+    const handleOwnerLead = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
-
-        const access_token=localStorage.getItem('access_token');
-        if(access_token===null){
+        alert("Inside handleOwnerLead")
+        const access_token = localStorage.getItem('access_token');
+        if (access_token === null) {
             alert("Please login first");
             navigate("/login");
         }
-        const headers={
-            'Content-Type':'application/json',
-            'Authorization':`Bearer ${access_token}`
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${access_token}`
         }
         console.log(data);
-        try{
-            const response=await axios.post("http://localhost:9091/owner-leads/v1/register-owner-lead",data,{headers})
+        try {
+            const response = await axios.post("http://localhost:9091/owner-leads/v1/register-owner-lead", data, { headers })
             console.log(response.data);
             alert(response.data);
             navigate("/leads/allleads");
 
         }
-        catch(error){
-            console.log("Error creating lead" , error)
+        catch (error) {
+            console.log("Error creating lead", error)
         }
     }
     const handleChange = (event: any) => {
@@ -220,55 +220,47 @@ const OwnerLead = () => {
     }
     return (
         <div>
-            <Box component='form' onSubmit={handleOwnerLead} noValidate sx={{mt:1}}>
+            <Box component='form' onSubmit={handleOwnerLead} noValidate sx={{ mt: 1 }}>
 
-                <Grid container my={4} alignItems="center" sx={{ m: 1 }}>
-                    <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
-                        <TextField
-                            label="First Name"
-                            name='firstName'
-                            value={data.firstName}
-                            onChange={handleChange}
-                            error={!!errors.firstName}
-                            required
-                            id="outlined-start-adornment"
-                            sx={{ width: 300 }}
-                        />
-                    </Grid>
-                    <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
-                        <TextField
-                            label="Last Name"
-                            name='lastName'
-                            value={data.lastName}
-                            onChange={handleChange}
-                            error={!!errors.lastName}
-                            required
-                            id="outlined-start-adornment"
-                            sx={{ width: 300 }}
-                        />
-                    </Grid>
-                    <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
-                        <TextField
-                            label="E-mail"
-                            name='emailId'
-                            value={data.emailId}
-                            onChange={handleChange}
-                            error={!!errors.emailId}
-                            required
-                            id="outlined-start-adornment"
-                            sx={{ width: 300 }}
-                        />
-                    </Grid>
-                    <Grid item xs={3.5} sx={{ paddingRight: '150px' }}>
+                <Grid  sx={{ m: 1 }}>
 
-                        <FormControl sx={{ m: 1 }}>
-                            <MuiTelInput label='Contact Number' required defaultCountry='IN' fullWidth name='contactNumber' onChange={handleContactChange}
-                                value={data.contactNumber}
+                    <TextField
+                        label="First Name"
+                        name='firstName'
+                        value={data.firstName}
+                        onChange={handleChange}
+                        error={!!errors.firstName}
+                        required
+                        
+                        id="outlined-start-adornment"
+                        sx={{ width: 300,m:1 }}
+                    />
+                    <TextField
+                        label="Last Name"
+                        name='lastName'
+                        value={data.lastName}
+                        onChange={handleChange}
+                        error={!!errors.lastName}
+                        required
+                        id="outlined-start-adornment"
+                        sx={{ width: 300 ,m:1 }}
+                    />
+                    <TextField
+                        label="E-mail"
+                        name='emailId'
+                        value={data.emailId}
+                        onChange={handleChange}
+                        error={!!errors.emailId}
+                        required
+                        id="outlined-start-adornment"
+                        sx={{ width: 300,m:1 }}
+                    />
+                    <FormControl sx={{ m: 1 }}>
+                        <MuiTelInput label='Contact Number' required defaultCountry='IN' fullWidth name='contactNumber' onChange={handleContactChange}
+                            value={data.contactNumber}
 
-                                error={!!errors.contactNumber} sx={{ width: 300 }} />
-                        </FormControl>
-                    </Grid>
-
+                            error={!!errors.contactNumber} sx={{ width: 300 }} />
+                    </FormControl>
                 </Grid>
                 <Grid sx={{ m: 1 }}>
                     <FormControl sx={{ m: 1 }}>
@@ -390,7 +382,7 @@ const OwnerLead = () => {
                     />
                 </Grid>
                 <Grid sx={{ m: 1 }}>
-                <FormControl sx={{ m: 1 }}>
+                    <FormControl sx={{ m: 1 }}>
                         <InputLabel id="preferredTenants-label">Preferred Tenanats</InputLabel>
                         <Select sx={{ width: 300 }}
                             id="preferredTenants-type"
@@ -486,15 +478,15 @@ const OwnerLead = () => {
                         rows={3}
                         variant='outlined' />
                 </Grid>
-                <Grid container justifyContent="end">
+                <Grid container justifyContent="start">
 
-                    <FormControl sx={{ m: 1 }}>
+                    <FormControl sx={{ m: 2 }}>
                         <Button sx={{ width: 160, height: 50 }} variant="contained" type="submit">
                             Add Owner Lead
                         </Button>
                     </FormControl>
                 </Grid>
-            
+
             </Box>
         </div >
     )

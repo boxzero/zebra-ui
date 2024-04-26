@@ -188,7 +188,7 @@ const BuyerLead = () => {
             <form onSubmit={handleSubmit}>
 
                 <Grid container my={4} alignItems="center" sx={{ m: 1 }}>
-                    <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
+                    
                         <TextField
                             label="First Name"
                             name='firstName'
@@ -197,10 +197,10 @@ const BuyerLead = () => {
                             error={!!errors.firstName}
                             required
                             id="outlined-start-adornment"
-                            sx={{ width: 300 }}
+                            sx={{ width: 300,m:1 }}
                         />
-                    </Grid>
-                    <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
+                    
+                    
                         <TextField
                             label="Last Name"
                             name='lastName'
@@ -209,10 +209,10 @@ const BuyerLead = () => {
                             error={!!errors.lastName}
                             required
                             id="outlined-start-adornment"
-                            sx={{ width: 300 }}
+                            sx={{ width: 300,m:1 }}
                         />
-                    </Grid>
-                    <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
+                  
+                    
                         <TextField
                             label="E-mail"
                             name='emailId'
@@ -221,10 +221,10 @@ const BuyerLead = () => {
                             error={!!errors.emailId}
                             required
                             id="outlined-start-adornment"
-                            sx={{ width: 300 }}
+                            sx={{ width: 300,m:1 }}
                         />
-                    </Grid>
-                    <Grid item xs={3.5} sx={{ paddingRight: '150px' }}>
+                    
+                    
 
                         <FormControl sx={{ m: 1 }}>
                             <MuiTelInput label='Contact Number' required defaultCountry='IN' fullWidth name='contactNumber' onChange={handleContactChange}
@@ -232,7 +232,7 @@ const BuyerLead = () => {
 
                                 error={!!errors.contactNumber} sx={{ width: 300 }} />
                         </FormControl>
-                    </Grid>
+                    
 
                 </Grid>
                 <Grid sx={{ m: 1 }}>
@@ -393,7 +393,7 @@ const BuyerLead = () => {
                         rows={3}
                         variant='outlined' />
                 </Grid>
-                <Grid container justifyContent="end">
+                <Grid container justifyContent="start">
 
                     <FormControl sx={{ m: 1 }}>
                         <Button sx={{ width: 160, height: 50 }} variant="contained" type="submit">
