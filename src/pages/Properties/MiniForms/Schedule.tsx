@@ -7,38 +7,19 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 type Props = {
   onNextTab: () => void
   OnPrevTab: () => void
+  formData:{
+    Availability: string,
+    StartTime: string,
+    EndTime: string
+  }
+  handleChange:(newData:any)=>void;
 }
+
 
 const Schedule = (props: Props) => {
 
-  const [isOutlined, setIsOutlined] = useState(true);
-  const [buttonBackground, setButtonBackground] = useState('transparent');
-
-
-  const [is1Outlined, setIs1Outlined] = useState(true);
-  const [button1Background, setButton1Background] = useState('transparent');
-
-  const [is2Outlined, setIs2Outlined] = useState(true);
-  const [button2Background, setButton2Background] = useState('transparent');
-
-  const [is3Outlined, setIs3Outlined] = useState(true);
-  const [button3Background, setButton3Background] = useState('transparent');
-
-
-  const [is4Outlined, setIs4Outlined] = useState(true);
-  const [button4Background, setButton4Background] = useState('transparent');
-
-
-  const [is5Outlined, setIs5Outlined] = useState(true);
-  const [button5Background, setButton5Background] = useState('transparent');
-
-  const [is6Outlined, setIs6Outlined] = useState(true);
-  const [button6Background, setButton6Background] = useState('transparent');
-  const [formData, setFormData] = useState({
-    Availability: '',
-    StartTime: '',
-    EndTime: ''
-  })
+  
+  const [formData, setFormData] = useState(props.formData)
   const [errors, setErrors] = useState({
     Availability: '',
     StartTime: '',
@@ -48,6 +29,8 @@ const Schedule = (props: Props) => {
   const handleChange = (event: SelectChangeEvent<string> | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name as string]: value });
+    props.handleChange({...props.formData,[name]:value})
+    console.log({...props.formData})
     setIsValid(
       formData.Availability !== '' &&
       formData.StartTime !== '' &&
@@ -59,15 +42,15 @@ const Schedule = (props: Props) => {
     event.preventDefault();
     let newErrors = { ...errors };
     let isValidForm = true;
-    if (!formData.Availability) {
+    if (!props.formData.Availability) {
       newErrors.Availability = "Availability is required"
       isValidForm = false;
     }
-    if (!formData.StartTime) {
+    if (!props.formData.StartTime) {
       newErrors.StartTime = 'StartTime is required';
       isValidForm = false;
     }
-    if (!formData.EndTime) {
+    if (!props.formData.EndTime) {
       newErrors.EndTime = 'EndTime is required';
       isValidForm = false;
     }
@@ -99,88 +82,7 @@ const Schedule = (props: Props) => {
       label: "Weekend"
     }
   ]
-  const [startTimeAnchorEl, setStartTimeAnchorEl] = useState<null | HTMLElement>(null);
-  const [endTimeAnchorEl, setEndTimeAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedStartTime, setSelectedStartTime] = useState<string>('');
-  const [selectedEndTime, setSelectedEndTime] = useState<string>('');
-
-  const handleStartTimeClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setStartTimeAnchorEl(event.currentTarget);
-  };
-
-  const handleEndTimeClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setEndTimeAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = (type: 'start' | 'end') => {
-    if (type === 'start') {
-      setStartTimeAnchorEl(null);
-    } else {
-      setEndTimeAnchorEl(null);
-    }
-  };
-
-  const handleOptionSelect = (option: string, type: 'start' | 'end') => {
-    if (type === 'start') {
-      setSelectedStartTime(option);
-      handleClose('start');
-    } else {
-      setSelectedEndTime(option);
-      handleClose('end');
-    }
-  };
-
-  const handleButtonClick = () => {
-    setIsOutlined(!isOutlined);
-    setButtonBackground(isOutlined ? 'green' : 'transparent');
-  };
-
-  const handleButton1Click = () => {
-    setIs1Outlined(!is1Outlined);
-    setButton1Background(is1Outlined ? 'green' : 'transparent');
-  };
-
-  const handleButton2Click = () => {
-    setIs2Outlined(!is2Outlined);
-    setButton2Background(is2Outlined ? 'green' : 'transparent');
-  };
-
-
-  const handleButton3Click = () => {
-    setIs3Outlined(!is3Outlined);
-    setButton3Background(is3Outlined ? 'green' : 'transparent');
-  };
-
-
-  // availability
-
-  const handleButton4Click = () => {
-    setIs4Outlined(true);
-    setIs5Outlined(false);
-    setIs6Outlined(false);
-    setButton4Background('green');
-    setButton5Background('transparent');
-    setButton6Background('transparent');
-  };
-
-  const handleButton5Click = () => {
-    setIs4Outlined(false);
-    setIs5Outlined(true);
-    setIs6Outlined(false);
-    setButton4Background('transparent');
-    setButton5Background('green');
-    setButton6Background('transparent');
-  };
-
-  const handleButton6Click = () => {
-    setIs4Outlined(false);
-    setIs5Outlined(false);
-    setIs6Outlined(true);
-    setButton4Background('transparent');
-    setButton5Background('transparent');
-    setButton6Background('green');
-  };
-
+  
 
 
   return (
@@ -197,9 +99,9 @@ const Schedule = (props: Props) => {
 
             label="ApartmentType"
             name='Availability'
+            value={props.formData.Availability}
             onChange={handleChange}
             error={!!errors.Availability}
-            value={formData.Availability}
 
 
           >
@@ -219,7 +121,7 @@ const Schedule = (props: Props) => {
                 id="demo-select-small"
                 label="ApartmentType"
                 name="StartTime"
-                value={formData.StartTime}
+                value={props.formData.StartTime}
                 error={!!errors.StartTime}
                 onChange={handleChange}
                 inputProps={{
@@ -240,9 +142,9 @@ const Schedule = (props: Props) => {
 
                 label="EndTime"
                 name="EndTime"
-                value={formData.EndTime}
-                onChange={handleChange}
+                value={props.formData.EndTime}
                 error={!!errors.EndTime}
+                onChange={handleChange}
 
 
               >

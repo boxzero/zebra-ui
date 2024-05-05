@@ -3,8 +3,18 @@ import React, { ChangeEvent, useState, useEffect } from "react";
 
 
 
-type Props = {
-  onNextTab:()=>void
+interface Props  {
+  onNextTab:()=>void;
+  formData: {
+    apartmentType: string;
+    bhkType: string;
+    floor: string;
+    totalfloor: string;
+    propertyAge: string;
+    facing: string;
+    builtupArea: string;
+  };
+  handleChange: (newData:any) => void;
 }
 
 
@@ -119,13 +129,7 @@ const PropertyDetails = (props: Props) => {
   for (var i = 0; i <= 100; i++) {
     floors.push({ value: i, label: i });
   }
-  const [apartmentType, setApartmentType] = useState('');
-  const [bhkType, setBhkType] = useState('');
-  const [floor, setFloor] = useState('');
-  const [totalfloor, setTotalFloor] = useState('');
-  const [propertyAge, setPropertyAge] = useState('');
-  const [facing, setFacing] = useState('');
-  const [builtupArea, setbuiltupArea] = useState('')
+  
   const [isValid, setisValid] = useState(false);
   const [formData, setFormData] = useState({
     apartmentType: '',
@@ -150,7 +154,7 @@ const PropertyDetails = (props: Props) => {
   })
   const handleChange = (event: SelectChangeEvent<string> | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name as string]: value });
+    props.handleChange({ ...props.formData, [name]: value as string });
     setisValid(
       formData.apartmentType!==''&&
       formData.bhkType!==''&&
@@ -164,27 +168,27 @@ const PropertyDetails = (props: Props) => {
     event.preventDefault();
     let newErrors = { ...errors };
     let isValidForm = true;
-    if (!formData.apartmentType) {
+    if (!props.formData.apartmentType) {
       newErrors.apartmentType = 'Apartment type is required';
       isValidForm = false;
     }
-    if (!formData.bhkType) {
+    if (!props.formData.bhkType) {
       newErrors.bhkType = 'BHK type is required';
       isValidForm = false;
     }
-    if (!formData.floor) {
+    if (!props.formData.floor) {
       newErrors.floor = 'No.of floors required';
       isValidForm = false;
     }
-    if (!formData.totalfloor) {
+    if (!props.formData.totalfloor) {
       newErrors.totalfloor = 'No.of total floors required';
       isValidForm = false;
     }
-    if (!formData.propertyAge) {
+    if (!props.formData.propertyAge) {
       newErrors.propertyAge = 'propertyAge is required required';
       isValidForm = false;
     }
-    if (!formData.facing) {
+    if (!props.formData.facing) {
       newErrors.facing = 'facing is required';
       isValidForm = false;
     }
@@ -203,33 +207,7 @@ const PropertyDetails = (props: Props) => {
   }
   }
 
-  const apartmentTypeHandleChange = (event: SelectChangeEvent) => {
-    setApartmentType(event.target.value);
-  }
-  const bhkTypeHandleChange = (event: SelectChangeEvent) => {
-    setBhkType(event.target.value);
-  }
-
-  const setFloorHandleChange = (event: SelectChangeEvent) => {
-    setFloor(event.target.value);
-  }
-
-  const setTotalFloorHandleChange = (event: SelectChangeEvent) => {
-    setTotalFloor(event.target.value);
-  }
-
-  const setPropertyAgeChange = (event: SelectChangeEvent) => {
-    setPropertyAge(event.target.value);
-  }
-
-  const setFacingChange = (event: SelectChangeEvent) => {
-    setFacing(event.target.value);
-    console.log(event.target.value);
-  }
-  const builtupAreaHandle = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    if (/^\d*$/.test(value) || value === '') setbuiltupArea(value);
-  }
+  
   
 
   return (
@@ -240,7 +218,7 @@ const PropertyDetails = (props: Props) => {
           <Select sx={{ width: 300 }}
             labelId="apartment-type-label"
             id="apartment-type"
-            value={formData.apartmentType}
+            value={props.formData.apartmentType}
             label="ApartmentType"
             name='apartmentType'
             onChange={handleChange}
@@ -260,7 +238,7 @@ const PropertyDetails = (props: Props) => {
           <Select sx={{ width: 300 }}
             labelId="bhk-Type"
             id="bhk-Type"
-            value={formData.bhkType}
+            value={props.formData.bhkType}
             label="BHKType"
             name='bhkType'
             onChange={handleChange}
@@ -276,7 +254,7 @@ const PropertyDetails = (props: Props) => {
           <Select sx={{ width: 300 }}
             labelId="floor"
             id="floor"
-            value={formData.floor}
+            value={props.formData.floor}
             label="floor"
             name='floor'
             onChange={handleChange}
@@ -292,7 +270,7 @@ const PropertyDetails = (props: Props) => {
           <Select sx={{ width: 300 }}
             labelId="total-floors"
             id="total-floors"
-            value={formData.totalfloor}
+            value={props.formData.totalfloor}
             label="totalfloor"
             name='totalfloor'
             onChange={handleChange}
@@ -312,7 +290,7 @@ const PropertyDetails = (props: Props) => {
           <Select sx={{ width: 300 }}
             labelId="property-age"
             id="property-age"
-            value={formData.propertyAge}
+            value={props.formData.propertyAge}
             label="propertyAge"
             name='propertyAge'
             onChange={handleChange}
@@ -328,7 +306,7 @@ const PropertyDetails = (props: Props) => {
           <Select sx={{ width: 300 }}
             labelId="facing"
             id="facing"
-            value={formData.facing}
+            value={props.formData.facing}
             label="facing"
             name='facing'
             onChange={handleChange}
@@ -351,10 +329,9 @@ const PropertyDetails = (props: Props) => {
             label="Built Up Area"
             id="built-up-area"
             sx={{ width: 300 }}
-            value={formData.builtupArea}
+            value={props.formData.builtupArea}
             name="builtupArea"
             onChange={handleChange}
-            
             InputProps={{
               endAdornment: <InputAdornment position="end">Sq.Ft.</InputAdornment>,
             }}

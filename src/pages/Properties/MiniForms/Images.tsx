@@ -9,6 +9,8 @@ interface Image {
 interface Props{
   onNextTab:()=>void
   onPrevTab:()=>void
+  parentImages: Image[]; // Correct the type here
+  setParentImages: React.Dispatch<React.SetStateAction<Image[]>>
 }
 
 const ImageUpload: React.FC <Props>= (props) => {
@@ -35,6 +37,7 @@ const ImageUpload: React.FC <Props>= (props) => {
               uploadedImages.push({ id: Date.now() + i, url: reader.result });
               if (uploadedImages.length === fileList.length) {
                 setImages((prevImages) => [...prevImages, ...uploadedImages]);
+                props.setParentImages((prevImages:Image[])=>[...prevImages,...uploadedImages])
               }
             }
           };
@@ -46,8 +49,9 @@ const ImageUpload: React.FC <Props>= (props) => {
   };
 
   const handleDelete = (id: number) => {
-    const updatedImages = images.filter((_, index) => index !== id);
+    const updatedImages = props.parentImages.filter((_, index) => index !== id);
     setImages(updatedImages);
+    props.setParentImages(updatedImages)
   };
 
   const handleAddPhotosClick = () => {
@@ -55,7 +59,7 @@ const ImageUpload: React.FC <Props>= (props) => {
       fileInputRef.current.click();
     }
   };
-  const proceedNext=images.length>0;
+  const proceedNext=props.parentImages.length>0;
   const handleNextClick=()=>{
     let newErrors={...errors};
     if(proceedNext){
@@ -113,7 +117,7 @@ const ImageUpload: React.FC <Props>= (props) => {
         Photos added by you
       </FormLabel>
       <Grid container spacing={2} alignItems="stretch">
-        {images.map((image, index) => (
+        {props.parentImages.map((image, index) => (
           <Grid item xs={12} sm={6} md={4} lg={4} key={image.id}>
             <Paper style={{ height: '100%', padding: '10px', textAlign: 'center' }}>
               <img
