@@ -26,6 +26,7 @@ import AddRole from "../pages/UserManagement/AddRole";
 import AddExpense from "../pages/Expense/AddExpense";
 import ViewUser from "../pages/UserManagement/ViewUser";
 import EditUser from "../pages/UserManagement/EditUser";
+import PropertyScan from "../pages/ClayManage/PropertyScan";
 
 
 
@@ -87,6 +88,14 @@ const appRoutes: RouteType[] = [
               sidebarProps: {
                 displayText: "UpManage"
               }  
+            },
+            {
+              path: "/claymanage/propertyscan",
+              element: <PropertyScan/>,
+              state: "claymanage.propertyscan",
+              sidebarProps: {
+                displayText: "PropertyScan"
+              }
             }
 
         ]

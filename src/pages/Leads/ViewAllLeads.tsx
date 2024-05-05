@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, FormControlLabel } from '@mui/material';
 import React, { ReactNode, useState } from 'react'
 import TenantLeadsList from './ViewerForms/TenantLeadsList';
 import OwnerLeadsList from './ViewerForms/OwnerLeadsList';
@@ -34,6 +34,7 @@ const ViewAllLeads = (props: Props) => {
   return (
     <div>
 
+      <InputLabel sx={{m:1}} id="label">View Leads</InputLabel>
 
        <FormControl sx={{ m: 1 }}>
           <InputLabel id="facing">Lead Type</InputLabel>
@@ -53,7 +54,7 @@ const ViewAllLeads = (props: Props) => {
 
           </Select>
         </FormControl>
- <br/>  <hr></hr>
+ <br/>  <hr/>
 
 
       {loadForm()}

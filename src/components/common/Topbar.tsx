@@ -1,11 +1,14 @@
 import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
-import { red } from '@mui/material/colors';
+import { green, red } from '@mui/material/colors';
 import { AppBar, Avatar, Box,  IconButton, Menu, Toolbar, Tooltip, Typography } from '@mui/material';
 import colorConfigs from '../../configs/colorConfigs';
 import sizeConfigs from '../../configs/sizeConfigs';
 import assets from '../../assets/assets';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
+import CircleIcon from '@mui/icons-material/Circle';
 
 
 const pages = ['Products', 'Pricing', 'Blog'];
@@ -22,12 +25,41 @@ const Topbar = () => {
     setAnchorElUser(event.currentTarget);
   };
 
+  const [loggedInUser,setloggedInUser] = React.useState('');
+
+  const loggedInUserDetails = async() => {
+
+    try{
+      const access_token = localStorage.getItem('access_token');
+      if(access_token === null){
+        alert("Token is missing");
+        navigate("/login")
+      }
+
+      //create headers
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${access_token}`,
+      };
+      const response = await axios.get('http://localhost:9091/users/v1/getloggedinuser',{headers});
+      setloggedInUser(response.data);
+
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  React.useEffect(()=> {
+    loggedInUserDetails();
+  },[])
   const handleCloseUserMenu = (event: any) => {
 
 
     const name  = event.target.textContent.trim();
 
     console.log(name);
+
+    
 
     switch (name) {
       case 'Profile':
@@ -92,13 +124,18 @@ const Topbar = () => {
 
         
           <Box sx={{ flexGrow: 1}}>
-
+            
           </Box>
 
+          <CircleIcon fontSize='small' sx={{ color: 'green'}}/> 
+          <Box component={Typography} sx={{px:1}}>
+          {loggedInUser}
+          </Box>
           <Box sx={{ flexGrow: 0}}>
+            
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: red[500]}} >H</Avatar>
+                <Avatar sx={{ bgcolor: red[500]}} >{loggedInUser.charAt(0).toUpperCase()}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu

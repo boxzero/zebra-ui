@@ -129,6 +129,7 @@ const OwnerLead = () => {
         preferredTenants: '',
         isNonVegAllowed: false,
         isPetAllowed: false,
+        clayManage: false,
 
     })
     const handleCheckbox = (checked: boolean, name: string) => {
@@ -280,6 +281,15 @@ const OwnerLead = () => {
                             label="Phone  Verified"
                             labelPlacement="end"
                             name='isPhoneVerified'
+                        />
+                    </FormControl>
+                    <FormControl sx={{ m: 1 }}>
+                        <FormControlLabel
+
+                            control={<Checkbox checked={data.clayManage} onChange={(event) => handleCheckbox(event.target.checked, 'clayManage')} />}
+                            label="Opted for ClayManage"
+                            labelPlacement="end"
+                            name='clayManage'
                         />
                     </FormControl>
                 </Grid>

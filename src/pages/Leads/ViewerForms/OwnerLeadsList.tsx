@@ -29,10 +29,34 @@ const OwnerLeadsList = () => {
       
       
       function handleDelete(id: GridRowId): void {
-        alert("Delete")
+        deleteUser(id);
       }
 
 
+      const deleteUser = async(id:any) =>{
+        const access_token = localStorage.getItem('access_token');
+
+        if(access_token === null) {alert("Token is missing"); return;}
+        // Create headers object with access_token
+    
+        try{    
+          const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access_token}`,
+          };
+    
+        const response = await axios.delete(`http://localhost:9091/owner-leads/v1/delete/${id}`,{headers});
+        
+        alert(response.data);
+        fetchData();
+      }catch (error:any) {
+        if (error.response && error.response.status === 403) {
+          alert('Forbidden: Access is denied due to insufficient permissions.');
+        } else {
+          alert('An error occurred while fetching the data.');
+        }
+      }
+      }
 
       function MailToLink({value}: MailToLinkProps) {
         return <a href={`mailto:${value}`}>{value}</a>;
@@ -53,26 +77,35 @@ const OwnerLeadsList = () => {
         "expectedRent": "",
         "googleMapLocationURL": ""
          */
-        {field: 'firstName',headerName: 'FIRSTNAME',editable:false},
-        {field: 'lastName',headerName: 'LASTNAME',editable:false},
-        {field: 'contactNumber', headerName: 'CONTACT',editable:true,width:150},
-        {field: 'emailId',headerName: 'EMAIL',editable:true,minWidth:200,
-        renderCell: (params) => <MailToLink value={params.value} />
-        },
-        {field: 'leadStatus',headerName: 'LEAD STATUS',editable:false,
+        {field: 'leadStatus',headerName: 'LEAD STATUS',editable:true,
         cellClassName: (params) => {
             if (params.value === 'NEW') {
               return 'lead-status-new';
             } else {
               return 'lead-status-other';
             }
-          }
+          },
+          type: 'singleSelect',
+          valueOptions: ['NEW', 'INPROGRESS', 'VISITSCHEDULED','ONBOARDED']
         },
+        {field: 'firstName',headerName: 'FIRSTNAME',editable:false},
+        {field: 'lastName',headerName: 'LASTNAME',editable:false},
+        {field: 'contactNumber', headerName: 'CONTACT',editable:true,width:150},
+        {field: 'emailId',headerName: 'EMAIL',editable:true,minWidth:200,
+        renderCell: (params) => <MailToLink value={params.value} />
+        },
+        {field: 'availableFrom', headerName: 'AVAILABLE FROM', editable:false,minWidth:100},
+        {field:'clayManage',headerName:'CLAY MANAGE',type: 'boolean',editable:false,minWidth:100},
         {field: 'locality', headerName: 'LOCALITY', editable:false,width:150},
         {field: 'bhkType', headerName: 'BHK TYPE', editable:false},
         {field: 'apartmentName', headerName: 'APARTMENT NAME',editable:true,minWidth:150},
         {field: 'expectedRent', headerName: 'EXPECTED RENT',editable:true},
-        {field: 'googleMapLocationURL', headerName: 'GOOGLE MAP URL', editable: true,width:200},
+        {field: 'googleMapLocationURL', headerName: 'GOOGLE MAP URL', editable: true,width:200,
+        renderCell: (params) => {
+            console.log(params.value)
+            return <a href={params.value} target="_blank" rel="noopener noreferrer">Open in Google Maps</a>;
+        }
+        },
         {
             field: 'id',
             headerName: 'Actions',
@@ -86,6 +119,7 @@ const OwnerLeadsList = () => {
         }
 
     ];
+
 
 
     const fetchData = async () => {
@@ -115,11 +149,12 @@ const OwnerLeadsList = () => {
     },[])
     return (
         <>
-    <Box sx={{height:550,width:`calc(100%)`}}>
+    <Box sx={{ height: 'calc(100vh - 200px)', width: '100%', overflow: 'auto' }}>
             <Typography variant='h6' component='h6'
             sx={{textAlign:'left',mt:2,mb:2}}>Owner Leads</Typography>
-        <StyledDataGrid
+        <StyledDataGrid sx={{height: '100%'}}
         columns={columns} rows={rows}
+        
         getRowId={(row) => row.ownerID} 
             
         pagination={true}/>

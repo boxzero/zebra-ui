@@ -113,7 +113,7 @@ const ViewAllUsers = () => {
   
   useEffect(() => {
     fetchData();
-  },[])
+  },[handleDelete])
   return (
     <Box sx={{height:700,width:'100%'}}>
     <Typography variant='h6' component='h6'
