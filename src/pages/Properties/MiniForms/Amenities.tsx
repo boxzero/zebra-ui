@@ -1,15 +1,11 @@
 import React from 'react'
-import { Grid ,Box, Badge, Paper} from '@mui/material';
-import FormGroup from '@mui/material/FormGroup';
+import { Grid, Box } from '@mui/material';
 import FormLabel from '@mui/material/FormLabel';
-import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, Autocomplete ,TextField, FormControlLabel, Checkbox,Stack,Chip,Button,ButtonGroup} from '@mui/material';
-import {Tooltip} from '@mui/material';
-// import { Badge } from '@mui/icons-material';
+import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, Autocomplete, TextField, FormControlLabel, Checkbox, Stack, Chip, Button, ButtonGroup, Typography } from '@mui/material';
+import { Tooltip } from '@mui/material';
 import ElevatorIcon from '@mui/icons-material/Elevator';
-// import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import BathtubIcon from '@mui/icons-material/Bathtub';
 import BalconyIcon from '@mui/icons-material/Balcony';
-import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import YardIcon from '@mui/icons-material/Yard';
 import BedroomParentIcon from '@mui/icons-material/BedroomParent';
@@ -24,14 +20,19 @@ import FireExtinguisherIcon from '@mui/icons-material/FireExtinguisher';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PestControlRodentIcon from '@mui/icons-material/PestControlRodent';
 import PowerIcon from '@mui/icons-material/Power';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 // import colorConfigs from "../../configs/colorConfigs";
 import colorConfigs from '../../../configs/colorConfigs';
+import { Description } from '@mui/icons-material';
+type Props = {
+  onNextTab: () => void
+  OnPrevTab: () => void
+}
 
-const Amenities = ()=> {
+const Amenities = (props: Props) => {
 
 
-   const waterSupply = [
+  const waterSupply = [
     {
       value: "corporation",
       label: "Corporation"
@@ -46,427 +47,426 @@ const Amenities = ()=> {
     },
 
   ];
+  const SelectYesOrNo = [
+    {
+      value: "yes",
+      label: "Yes"
+    },
+    {
+      value: "no",
+      label: "No"
+    }
+
+  ];
 
   const properties = [
-        {
-            value: "1",
-            label: "Need help"
-        },
-        {
-            value:"2",
-            label:"I will show"
-        },
-        {
-            value:"3",
-            label:"Neighbours"
-        },
-        {
-            value:"4",
-            label:"Friends/Relatives"
-        },
-        {
-            value:"5",
-            label:"Security"
-        },
-        {
-            value:"6",
-            label:"Tenants"
-        },
-        {
-            value:"7",
-            label:"Others"
-        },
-    ];
+    {
+      value: "1",
+      label: "Need help"
+    },
+    {
+      value: "2",
+      label: "I will show"
+    },
+    {
+      value: "3",
+      label: "Neighbours"
+    },
+    {
+      value: "4",
+      label: "Friends/Relatives"
+    },
+    {
+      value: "5",
+      label: "Security"
+    },
+    {
+      value: "6",
+      label: "Tenants"
+    },
+    {
+      value: "7",
+      label: "Others"
+    },
+  ];
+  const [propertyShow, setpropertyShow] = useState('')
+  const [iscontactHidden, setiscontactHidden] = useState(false);
 
 
 
-  const [water,setWater] = useState('');
+  const [formData, setFormData] = useState({
+    Bathroom: '',
+    Balcony: '',
+    WaterSupply: '',
+    Gym: '',
+    NonVegAllowed: '',
+    GatedSecurity: '',
+    showProperty: '',
+    Description: '',
+    contactNumber: ''
 
-   const [property, setProperty] = useState('');
+  })
+  const [errors, setErrors] = useState({
+    Bathroom: '',
+    Balcony: '',
+    WaterSupply: '',
+    Gym: '',
+    NonVegAllowed: '',
+    GatedSecurity: '',
+    showProperty: '',
+    Description: '',
+
+  })
+  const handleshowProperty = (event: SelectChangeEvent) => {
+    const option = event.target.value as string;
+    setpropertyShow(option);
+    setFormData({ ...formData, showProperty: option });
+    if (option === '2')
+      setiscontactHidden(false);
+    else setiscontactHidden(true);
+  }
+  const [isValid, setIsValid] = useState(false);
+  const handleChange = (event: SelectChangeEvent<string> | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name as string]: value })
+    setIsValid(
+      formData.Bathroom !== '' &&
+      formData.Balcony !== '' &&
+      formData.WaterSupply !== '' &&
+      formData.Gym !== '' &&
+      formData.NonVegAllowed !== '' &&
+      formData.GatedSecurity !== '' &&
+      formData.showProperty !== '' &&
+      formData.Description !== ''
+    )
+  }
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    let isValdiForm = true;
+
+    event.preventDefault();
+    let newErrors = { ...errors };
+    if (!formData.Bathroom) {
+      newErrors.Bathroom = 'No of bathrooms are required'
+      isValdiForm = false;
+    }
+    if (!formData.Balcony) {
+      newErrors.Balcony = 'No of Balcony are required'
+      isValdiForm = false;
+    }
+    if (!formData.WaterSupply) {
+      newErrors.WaterSupply = 'WaterSupply is required'
+      isValdiForm = false;
+    }
+    if (!formData.Gym) {
+      newErrors.Gym = 'Gym is required'
+      isValdiForm = false;
+    }
+    if (!formData.NonVegAllowed) {
+      newErrors.NonVegAllowed = 'NonVegAllowed required'
+      isValdiForm = false;
+    }
+    if (!formData.GatedSecurity) {
+      newErrors.GatedSecurity = 'GatedSecurity required'
+      isValdiForm = false;
+    }
+    if (!formData.showProperty) {
+      newErrors.showProperty = 'showProperty required'
+      isValdiForm = false;
+    }
+    if (!formData.Description) {
+      newErrors.Description = 'Description required'
+      isValdiForm = false;
+    }
+
+    setErrors(newErrors)
+    if (isValdiForm) props.onNextTab();
+    else {
+      alert('Fill all the details')
+    }
+  }
+  const [allAmenitiesChecked, setAllAmenitiesChecked] = useState(false);
+  const [amenities, setAmenities] = useState({
+    lift: false,
+    intercom: false,
+    childrenPlayArea: false,
+    servantRoom: false,
+    gasPipeline: false,
+    rainwaterHarvesting: false,
+    housekeeping: false,
+    visitorParking: false,
+    internetServices: false,
+    clubHouse: false,
+    swimmingPool: false,
+    fireSafety: false,
+    shoppingCentre: false,
+    park: false,
+    sewageTreatmentPlant: false,
+    powerBackup: false,
+  });
+
+  const handleAllAmenitiesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked;
+    setAllAmenitiesChecked(isChecked);
+    let updatedAmenities = { ...amenities };
+    for (const key in updatedAmenities) {
+      if (Object.prototype.hasOwnProperty.call(updatedAmenities, key)) {
+        updatedAmenities[key as keyof typeof amenities] = isChecked;
+      }
+    }
+    setAmenities(updatedAmenities);
+  };
+
+  const handleSingleAmenityChange = (key: keyof typeof amenities, checked: boolean) => {
+    setAmenities({ ...amenities, [key]: checked });
+  };
+  const [water, setWater] = useState('');
+
+  const [property, setProperty] = useState('');
   const propertyHandleChange = (event: SelectChangeEvent) => {
     setProperty(event.target.value);
   }
 
-     const waterChangeHandler = (event: SelectChangeEvent) => {
-        setWater(event.target.value);
-    }
+  const waterChangeHandler = (event: SelectChangeEvent) => {
+    setWater(event.target.value);
+  }
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
 
-      <FormLabel sx = {{m:1,fontSize:'20px'}} component="legend">Provide additional details about your property to get maximum visibilty</FormLabel>
+      <div>
 
-      <Grid container my = {4} alignItems="center" sx={{m:1}}>
-        <Grid item xs={3.5} sx={{m:1 , paddingRight:'150px'}}>
+        <FormLabel sx={{ m: 1, fontSize: '20px' }} component="legend">Provide additional details about your property to get maximum visibilty</FormLabel>
 
-    <TextField 
-    
+        <Grid container my={4} alignItems="center" sx={{ m: 1 }}>
+          <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
 
-          id="standard-number"
-          label="Bathroom(s)"
-          type="number"
-          required
-          
-          InputProps={{
-                    startAdornment: <InputAdornment position="start"><BathtubIcon/></InputAdornment>,
-                  
-                  }}
+            <TextField
+              label="Bathrooms"
+              value={formData.Bathroom}
+              name='Bathroom'
+              onChange={handleChange}
+              error={!!errors.Bathroom}
+              id="outlined-start-adornment"
+              sx={{ width: 300 }}
 
-                  sx={{height:'20px'}}
 
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="standard"
+              InputProps={{
+                startAdornment: <InputAdornment position="start"><BathtubIcon /></InputAdornment>,
 
-        />
-        </Grid>
+              }}
 
-        <Grid item xs={3.5} sx={{m:1 , paddingRight:'150px'}}>
+            />
+          </Grid>
 
-    <TextField
+          <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
 
-          id="standard-number"
-          label="Balcony"
-          type="number"
-          InputProps={{
-                    startAdornment: <InputAdornment position="start"><BalconyIcon/></InputAdornment>,
-                  
-                  }}
+            <TextField
+              label="Balcony"
+              id="outlined-start-adornment"
+              sx={{ width: 300 }}
+              value={formData.Balcony}
+              error={!!errors.Balcony}
+              name='Balcony'
+              onChange={handleChange}
+              InputProps={{
+                startAdornment: <InputAdornment position="start"><BalconyIcon /></InputAdornment>,
 
-                  sx={{height:'20px'}}
+              }}
 
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="standard"
 
-        />
-        </Grid>
 
-         <div>
-            <FormControl sx = {{m:1}}>
-            <InputLabel id="demo-select-small">Water Supply</InputLabel>
-                <Select sx={{width: 300}}
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={water}
-                    label="ApartmentType"
-                    onChange={waterChangeHandler}
-                >
-                    {waterSupply.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
-                    
-                </Select>
+            />
+          </Grid>
+
+          <div>
+            <FormControl sx={{ m: 1 }}>
+              <InputLabel id="demo-select-small">Water Supply</InputLabel>
+              <Select sx={{ width: 300 }}
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={formData.WaterSupply}
+                error={!!errors.WaterSupply}
+                label="ApartmentType"
+                name='WaterSupply'
+                onChange={handleChange}
+
+              >
+                {waterSupply.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
+
+              </Select>
             </FormControl>
-            </div>
+          </div>
 
-        
+
         </Grid>
 
-        <br/>
+        <br />
 
-        <Grid container my = {4} alignItems="center">
-        <Grid item xs={3.5} sx={{m:1 , paddingRight:'150px'}}>
+        <Grid container my={4} alignItems="center">
+          <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
 
-        <Button sx={{color: colorConfigs.amenities.color,m:1}} variant="outlined" color = 'primary' >Gym
+            <FormControl sx={{ m: 1 }}>
+              <InputLabel id="demo-select-small">Gym</InputLabel>
+              <Select sx={{ width: 300 }}
+                labelId="demo-select-small"
+                id="demo-select-small"
+                error={!!errors.Bathroom}
+                value={formData.Bathroom}
+                label="ApartmentType"
+                name='Gym'
+                onChange={handleChange}
+              >
+                {SelectYesOrNo.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
 
-        <ButtonGroup  sx={{paddingLeft:'70px', paddingTop:'10px',paddingBottom:'10px'}}
-  disableElevation
-  variant="outlined"
-  aria-label="Disabled button group"
-  
->
-  <Button sx={{color: colorConfigs.amenities.color}}  >Yes</Button>
-  <Button sx={{color: colorConfigs.amenities.color}} >No</Button>
-</ButtonGroup>
-
-
-</Button>
-</Grid>
-
-<Grid item xs={3.5} sx={{m:1 , paddingRight:'150px'}}>
-
-        <Button sx={{color: colorConfigs.amenities.color,m:1}} variant="outlined" color = 'primary' > Non-Veg Allowed
-
-        <ButtonGroup  sx={{paddingLeft:'70px', paddingTop:'10px',paddingBottom:'10px'}}
-  disableElevation
-  variant="outlined"
-  aria-label="Disabled button group"
-  
->
-  <Button sx={{color: colorConfigs.amenities.color}}>Yes</Button>
-  <Button sx={{color: colorConfigs.amenities.color}}>No</Button>
-</ButtonGroup>
-
-
-</Button>
-</Grid>
-
-<Grid item xs={3.5} sx={{m:1 , paddingRight:'150px'}}>
-
-        <Button  sx={{color: colorConfigs.amenities.color,m:1}} variant="outlined" color = 'primary'  >Gated Security
-
-        <ButtonGroup  sx={{paddingLeft:'70px', paddingTop:'10px',paddingBottom:'10px'}}
-  disableElevation
-  variant="outlined"
-  aria-label="Disabled button group"
-  
->
-  <Button sx={{color: colorConfigs.amenities.color}}>Yes</Button>
-  <Button sx={{color: colorConfigs.amenities.color}}>No</Button>
-</ButtonGroup>
-
-
-</Button>
-</Grid>
-</Grid>
-<Grid container my = {6} alignItems="center">
-        <Grid item xs={3.5} sx={{m:1}}>
-
-<FormControl sx = {{m:1}}>
-            <InputLabel id="demo-select-small">Who will show the property</InputLabel>
-                <Select sx={{width: 500}}
-      
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={property}
-                    label="Furniture"
-                    onChange={propertyHandleChange}
-                >
-                    {properties.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
-                </Select>
-               
+              </Select>
             </FormControl>
-             </Grid>
+          </Grid>
 
-             <Grid item xs={5} sx={{m:1,paddingLeft:'443px'}}>
-              
-            <FormControl sx = {{m:1}}>
-                <TextField
-                        label="Contact Number"
-                        id="outlined-start-adornment"
-                        sx={{width: 300}}
-                        
-                        /> 
-            </FormControl>   
-         
-             </Grid>
+          <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
 
-                </Grid>
-            
-         
+            <FormControl sx={{ m: 1 }}>
+              <InputLabel id="demo-select-small">Non-veg Allowed</InputLabel>
+              <Select sx={{ width: 300 }}
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={formData.NonVegAllowed}
+                error={!!errors.NonVegAllowed}
+                label="ApartmentType"
+                name='NonVegAllowed'
+                onChange={handleChange}
+              >
+                {SelectYesOrNo.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
 
-      
-       <FormLabel sx = {{m:1}} component="legend">Add Direction Tip for your tenants.. <Chip label="New" color="success" /></FormLabel>
-       <br/>
+              </Select>
+            </FormControl>
+          </Grid>
 
-    <Grid item sx = {{width:1195,m:1}}>
-      <Tooltip sx={{ m: 1 }} title="Eg: Take road opposite to Amrita College..." arrow>
-      
-      <TextField label="Description" multiline rows={4} placeholder="Type your message here" variant="outlined" fullWidth />
-      </Tooltip>
-    
-     </Grid>
-     <FormLabel sx = {{m:1,fontSize:'20px'}} component="legend">Select the available amenities</FormLabel>
+          <Grid item xs={3.5} sx={{ m: 1, paddingRight: '150px' }}>
 
+            <FormControl sx={{ m: 1 }}>
+              <InputLabel id="demo-select-small">Gated Security</InputLabel>
+              <Select sx={{ width: 300 }}
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={formData.GatedSecurity}
+                error={!!errors.GatedSecurity}
+                label="ApartmentType"
+                name='GatedSecurity'
+                onChange={handleChange}
+              >
+                {SelectYesOrNo.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
 
-    <Grid container my = {4}>
-        <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <ElevatorIcon />
-          <FormControlLabel
-            control={<Checkbox />}
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Grid container my={6} alignItems="center">
+          <Grid item xs={3.5} sx={{ m: 1 }}>
 
-          label="Lift" 
-          labelPlacement="end"
-        />
-        </Stack>
+            <FormControl sx={{ m: 1 }}>
+              <InputLabel id="demo-select-small">Who will show the property</InputLabel>
+              <Select sx={{ width: 500 }}
+
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={formData.showProperty}
+                error={!!errors.showProperty}
+                label="Furniture"
+                name='showProperty'
+                onChange={handleshowProperty}
+              >
+                {properties.map(({ value, label }, index) => <MenuItem value={value} >{label}</MenuItem>)}
+              </Select>
+
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={5} sx={{ m: 1, paddingLeft: '200px' }}>
+
+            <FormControl sx={{ m: 1 }}>
+              {iscontactHidden && (<TextField
+                label="Contact Number"
+                id="outlined-start-adornment"
+                name='contactNumber'
+                value={formData.contactNumber}
+                onChange={handleChange}
+                sx={{ width: 300 }}
+
+              />)}
+
+            </FormControl>
+
+          </Grid>
+
         </Grid>
 
-        <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <LocalPhoneIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-          label="Intercom" 
-          labelPlacement="end"
-        />
-        </Stack>
+
+
+
+
+        <FormLabel sx={{ m: 1, fontSize: '20px' }} component="legend">Select the available amenities</FormLabel>
+
+
+        <Grid container my={4}>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={allAmenitiesChecked}
+                  onChange={handleAllAmenitiesChange}
+                  name="allAmenities"
+                />
+              }
+              label="Select All Amenities"
+            />
+          </Grid>
+          <Grid container my={4}></Grid>
+          {Object.entries(amenities).map(([key, value]) => (
+            <Grid key={key} item xs={6}>
+              <Stack direction="row" spacing={0} alignItems="center">
+                {key === 'lift' && <ElevatorIcon />}
+                {key === 'intercom' && <LocalPhoneIcon />}
+                {key === 'childrenPlayArea' && <YardIcon />}
+                {key === 'servantRoom' && <BedroomParentIcon />}
+                {key === 'gasPipeline' && <GasMeterIcon />}
+                {key === 'rainwaterHarvesting' && <AgricultureIcon />}
+                {key === 'housekeeping' && <ManIcon />}
+                {key === 'visitorParking' && <DirectionsCarFilledIcon />}
+                {key === 'internetServices' && <WifiIcon />}
+                {key === 'clubHouse' && <HouseIcon />}
+                {key === 'swimmingPool' && <PoolIcon />}
+                {key === 'fireSafety' && <FireExtinguisherIcon />}
+                {key === 'shoppingCentre' && <ShoppingCartIcon />}
+                {key === 'park' && <YardIcon />}
+                {key === 'sewageTreatmentPlant' && <PestControlRodentIcon />}
+                {key === 'powerBackup' && <PowerIcon />}
+                <FormControlLabel
+                  control={<Checkbox checked={value} onChange={(e) => handleSingleAmenityChange(key as keyof typeof amenities, e.target.checked)} />}
+                  label={key}
+                  labelPlacement="end"
+                />
+              </Stack>
+            </Grid>
+          ))}
+        </Grid>
+        <Grid container justifyContent="space-between">
+          <FormControl sx={{ m: 1 }}>
+            <Button sx={{ width: 160, height: 50 }} variant="contained" onClick={props.OnPrevTab}>
+              Previous
+            </Button>
+          </FormControl>
+          <FormControl sx={{ m: 1 }}>
+            <Button sx={{ width: 160, height: 50 }} variant="contained" type="submit">
+              Next
+            </Button>
+          </FormControl>
         </Grid>
 
-            
-
-        <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <YardIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Children Play Area" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-           <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <BedroomParentIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Servant Room" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-           <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <GasMeterIcon/>
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Gas Pipeline" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-          <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <AgricultureIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Rainwater Harvesting" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-          <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <ManIcon  />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Housekeeping" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-         <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <DirectionsCarFilledIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Visitor Parking" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-  <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <WifiIcon/>
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Internet Services" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-           <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <HouseIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Club House " 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-          <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <PoolIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Swimming Pool" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-          <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <FireExtinguisherIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Fire Safety" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-         <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <ShoppingCartIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Shopping centre" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-          <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <YardIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Park" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-
-         <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <PestControlRodentIcon />
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Sewage Treatment Plant" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-  <Grid item xs={6}>
-        <Stack direction="row" spacing={0} alignItems="center">
-          <PowerIcon/>
-          <FormControlLabel
-            control={<Checkbox />}
-
-          label="Power Backup" 
-          labelPlacement="end"
-        />
-        </Stack>
-        </Grid>
-    </Grid>
-
-      
 
 
-    </div>
+
+      </div>
+    </form>
   )
 }
 

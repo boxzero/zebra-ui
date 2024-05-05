@@ -1,15 +1,20 @@
 import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
-import { red } from '@mui/material/colors';
+import { green, red } from '@mui/material/colors';
 import { AppBar, Avatar, Box,  IconButton, Menu, Toolbar, Tooltip, Typography } from '@mui/material';
 import colorConfigs from '../../configs/colorConfigs';
 import sizeConfigs from '../../configs/sizeConfigs';
 import assets from '../../assets/assets';
+import { useNavigate } from 'react-router';
+import axios from 'axios';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
+import CircleIcon from '@mui/icons-material/Circle';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 const pages = ['Products', 'Pricing', 'Blog'];
-const Topbar = () => {
 
+const Topbar = () => {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -20,11 +25,60 @@ const Topbar = () => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const [loggedInUser,setloggedInUser] = React.useState('');
 
-  const handleCloseUserMenu = () => {
+  const loggedInUserDetails = async() => {
+
+    try{
+      const access_token = localStorage.getItem('access_token');
+      if(access_token === null){
+        alert("Token is missing");
+        navigate("/login")
+      }
+
+      //create headers
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${access_token}`,
+      };
+      const response = await axios.get('http://localhost:9091/users/v1/getloggedinuser',{headers});
+      setloggedInUser(response.data);
+
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  React.useEffect(()=> {
+    loggedInUserDetails();
+  },[])
+  const handleCloseUserMenu = (event: any) => {
+
+
+    const name  = event.target.textContent.trim();
+
+    console.log(name);
+
+    
+
+    switch (name) {
+      case 'Profile':
+        alert('Profile clicked!');
+        break;
+      case 'Account':
+        alert('Account clicked!');
+        break;
+      case 'Dashboard':
+        alert('Dashboard clicked!');
+        break;
+      case 'Logout':
+        console.log('Logout clicked!');
+        localStorage.removeItem('access_token');
+        navigate("/login");
+        break;
+      default:
+        break;
+    }
     setAnchorElUser(null);
   };
 
@@ -70,13 +124,18 @@ const Topbar = () => {
 
         
           <Box sx={{ flexGrow: 1}}>
-
+            
           </Box>
 
+          <CircleIcon fontSize='small' sx={{ color: 'green'}}/> 
+          <Box component={Typography} sx={{px:1}}>
+          {loggedInUser}
+          </Box>
           <Box sx={{ flexGrow: 0}}>
+            
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: red[500]}} >H</Avatar>
+                <Avatar sx={{ bgcolor: red[500]}} >{loggedInUser.charAt(0).toUpperCase()}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu
@@ -95,11 +154,22 @@ const Topbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
-              ))}
+
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Account</Typography>
+                </MenuItem>
+
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Dashboard</Typography>
+                </MenuItem>
+
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
+              
             </Menu>
           </Box>
 

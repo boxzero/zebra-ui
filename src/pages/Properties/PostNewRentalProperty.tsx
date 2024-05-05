@@ -23,11 +23,32 @@ const PostNewRentalProperty = () => {
 
   //const [apartmentType, setApartmentType] = useState('');
   const [value, setValue] = React.useState(0);
+  
+
+  
+  const [formData, setFormData] = useState({
+    apartmentType: '',
+    bhkType: '',
+    floor: '',
+    totalfloor: '',
+    propertyAge: '',
+    facing: '',
+    builtupArea: ''
+  });
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log("Changed", newValue);
     setValue(newValue);
   };
+  
+  
+  const handleNextTab=()=>{
+    setValue(prevTab=>prevTab+1);
+  }
+  const handlePrevTab=()=>{
+    if(value>0)
+    setValue(prevTab=>prevTab-1);
+  }
 
 
 
@@ -82,126 +103,63 @@ const PostNewRentalProperty = () => {
    </Tabs>     
   </Box>
   <TabPanel value={value} index={0}>
-     <PropertyDetails/>
-     <Grid container justifyContent="flex-end">
-    <FormControl sx={{ m: 1}} >
-    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateNextIcon />}
-    onClick={(e) => handleChange(e, value+1) }
-    >
-         Next
-    </Button></FormControl>
-    </Grid>
+     <PropertyDetails  onNextTab={handleNextTab}/>
+     
   </TabPanel>
    
   <TabPanel value={value} index={1}>
-     <LocalityDetails/>
-    
-    <Grid container spacing={12} justifyContent={'space-between'}>  
-    
-    <Grid item> 
-    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateBeforeIcon />}
-    onClick={(e) => handleChange(e, value-1) }
-    >
-         Previous
-    </Button> 
-    </Grid>
-
-    <Grid item>
-    <Button sx={{ width: 160, height: 50}} variant="contained" startIcon={<NavigateNextIcon />}
-    onClick={(e) => handleChange(e, value+1) }
-    >
-         Next
-    </Button>
-    </Grid>
-    
-    </Grid>
-
+     <LocalityDetails onNextTab={handleNextTab} OnPrevTab={handlePrevTab}/>
     
   </TabPanel>
 
    <TabPanel value={value} index={2}>
-     <RentalDetails/>
-    
-    <Grid container spacing={12} justifyContent={'space-between'}>  
-    
-    <Grid item> 
-    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateBeforeIcon />}
-    onClick={(e) => handleChange(e, value-1) }
-    >
-         Previous
-    </Button> 
-    </Grid>
-
-    <Grid item>
-    <Button sx={{ width: 160, height: 50}} variant="contained" startIcon={<NavigateNextIcon />}
-    onClick={(e) => handleChange(e, value+1) }
-    >
-         Next
-    </Button>
-    </Grid>
-    
-    </Grid>
-
+     <RentalDetails onNextTab={handleNextTab} OnPrevTab={handlePrevTab}/>
     
   </TabPanel>
 
   <TabPanel value={value} index={4}>
-     <Amenities/>
-    
-    <Grid container spacing={12} justifyContent={'space-between'}>  
-    
-    <Grid item> 
-    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateBeforeIcon />}
-    onClick={(e) => handleChange(e, value-1) }
-    >
-         Previous
-    </Button> 
-    </Grid>
-
-    <Grid item>
-    <Button sx={{ width: 160, height: 50}} variant="contained" startIcon={<NavigateNextIcon />}
-    onClick={(e) => handleChange(e, value+1) }
-    >
-         Next
-    </Button>
-    </Grid>
-    
-    </Grid>
-
+     <Amenities onNextTab={handleNextTab} OnPrevTab={handlePrevTab} />
     
   </TabPanel>
+
 
   <TabPanel value={value} index={5}>
-    <Images/>
+     <Images onNextTab={handleNextTab} onPrevTab={handlePrevTab}/>
+       <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+    <br/>
+  <br/>
+  <br/>
+  <br/>
+   <br/>
+  
   </TabPanel>
 
-  <TabPanel value={value} index={6}>
-    <Schedule/>
+   <TabPanel value={value} index={6}>
+     <Schedule onNextTab={handleNextTab} OnPrevTab={handlePrevTab}/>
+      <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+    <br/>
+
   </TabPanel>
 
    <TabPanel value={value} index={3}>
-     <OwnerDetails/>
-    
-    <Grid container spacing={12} justifyContent={'space-between'}>  
-    
-    <Grid item> 
-    <Button sx={{ width: 160, height: 50}} variant="contained" endIcon={<NavigateBeforeIcon />}
-    onClick={(e) => handleChange(e, value-1) }
-    >
-         Previous
-    </Button> 
-    </Grid>
-
-    <Grid item>
-    <Button sx={{ width: 160, height: 50}} variant="contained" startIcon={<NavigateNextIcon />}
-    onClick={(e) => handleChange(e, value+1) }
-    >
-         Next
-    </Button>
-    </Grid>
-    
-    </Grid>
-
+     <OwnerDetails onNextTab={handleNextTab} OnPrevTab={handlePrevTab}/>
     
   </TabPanel>
 
