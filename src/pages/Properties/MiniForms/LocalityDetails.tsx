@@ -1,6 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField,Grid,Button } from "@mui/material";
 import { useState, ChangeEvent } from "react";
-import { GoogleMap, Marker, Autocomplete, useJsApiLoader } from '@react-google-maps/api';
 
 interface Props  {
     onNextTab: () => void
