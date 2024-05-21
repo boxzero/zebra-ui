@@ -62,14 +62,12 @@ const AddExpense = (props: Props) => {
     date: "",
     notes: "",
   });
+  const [firstLoad, setFirstLoad] = useState(false);
 
   const [user, setUser] = useState([{ username: "", name: "" }]);
   useEffect(() => {
-    setFirstLoad(true);
     fetchUserList();
   }, []);
-
-  const [firstLoad, setFirstLoad] = useState(false);
 
   const fetchUserList = async () => {
     const access_token = localStorage.getItem("access_token");
@@ -183,7 +181,7 @@ const AddExpense = (props: Props) => {
               name="date"
               slotProps={{
                 textField: {
-                  error: !expenseData.date,
+                  error: !expenseData.date && firstLoad,
                 },
               }}
             />
