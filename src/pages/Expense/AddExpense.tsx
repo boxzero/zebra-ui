@@ -49,6 +49,10 @@ const expenseTypes = [
     label: "Travel",
   },
   {
+    value: "marketing",
+    label: "Marketing/Ads",
+  },
+  {
     value: "other",
     label: "Other",
   },
@@ -65,7 +69,7 @@ const AddExpense = (props: Props) => {
 
   const [user, setUser] = useState([{ username: "", name: "" }]);
   useEffect(() => {
-    setFirstLoad(true);
+    setFirstLoad(false);
     fetchUserList();
   }, []);
 
@@ -101,7 +105,7 @@ const AddExpense = (props: Props) => {
   const handleWheel = (event: any) => {
     event.target?.blur();
   };
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async(e: { preventDefault: () => void;}) => {
     if (
       expenseData.expenseType &&
       expenseData.amount &&
@@ -109,6 +113,25 @@ const AddExpense = (props: Props) => {
       expenseData.expenseMadeBy
     ) {
       console.log(expenseData);
+      const access_token = localStorage.getItem("access_token");
+      if (access_token === null) {
+        alert("Token is missing ");
+        return;
+      }
+      
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${access_token}`,
+      };
+        try {
+          const response = await axios.post('http://localhost:9091/expense/add',expenseData,{headers});
+          console.log(response.data)
+          alert("Expense created successfully!");
+          
+        }catch(error) {
+            console.log('Error in creating user',error)
+        }
+
     } else {
       setFirstLoad(true);
       alert("please fillup the mandatory firlds");
@@ -117,7 +140,7 @@ const AddExpense = (props: Props) => {
   return (
     <>
       <div>AddExpense</div>
-      <Box component="form" noValidate sx={{ mt: 1 }}>
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <FormControl sx={{ m: 1 }}>
           <InputLabel id="expense-type-label">Expense Type</InputLabel>
           <Select
