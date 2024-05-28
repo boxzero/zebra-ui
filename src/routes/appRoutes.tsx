@@ -27,6 +27,7 @@ import AddExpense from "../pages/Expense/AddExpense";
 import ViewUser from "../pages/UserManagement/ViewUser";
 import EditUser from "../pages/UserManagement/EditUser";
 import PropertyScan from "../pages/ClayManage/PropertyScan";
+import { ViewAllExpense } from "../pages/Expense/ViewAllExpense";
 
 
 
@@ -271,6 +272,14 @@ const appRoutes: RouteType[] = [
               state: "expense.addexpense",
               sidebarProps: {
                 displayText: "Add Expense"
+              }
+          },
+          {
+            path: "/expense/viewallexpense",
+              element: <ViewAllExpense/>,
+              state: "expense.viewallexpense",
+              sidebarProps: {
+                displayText: "View All Expenses"
               }
           }
         ]
