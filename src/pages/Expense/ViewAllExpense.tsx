@@ -48,7 +48,7 @@ export const ViewAllExpense = () => {
                 'Authorization': `Bearer ${access_token}`,
               };
             console.log(access_token)
-            const response= await axios.get('http://localhost:9091/expense/all',{headers});
+            const response= await axios.get('/expense/all',{headers});
             setRows(response.data)
             
             console.log(response.data)

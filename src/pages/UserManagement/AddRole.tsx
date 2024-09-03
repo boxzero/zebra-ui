@@ -30,7 +30,7 @@ const AddRole = (props: Props) => {
     };
 
     try {
-      const response = await axios.post('http://localhost:9091/roles/v1/register-role',role,{headers});
+      const response = await axios.post('/roles/v1/register-role',role,{headers});
       console.log(response.data)
       alert("Role created successfully!");
       navigate("/users/viewallroles");

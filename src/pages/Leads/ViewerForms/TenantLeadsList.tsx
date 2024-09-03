@@ -28,7 +28,7 @@ const TenantLeadsList = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`,
             };
-            const response = await axios.get('http://localhost:9091/tenant-leads/get-leads', { headers });
+            const response = await axios.get('/tenant-leads/get-leads', { headers });
 
             setRows(response.data);
         } catch (err: any) {

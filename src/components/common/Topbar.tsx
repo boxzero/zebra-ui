@@ -41,7 +41,7 @@ const Topbar = () => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${access_token}`,
       };
-      const response = await axios.get('http://localhost:9091/users/v1/getloggedinuser',{headers});
+      const response = await axios.get('/users/v1/getloggedinuser',{headers});
       setloggedInUser(response.data);
 
     }catch(error){

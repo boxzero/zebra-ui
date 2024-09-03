@@ -87,7 +87,7 @@ const AddExpense = (props: Props) => {
     };
 
     const response = await axios.get(
-      "http://localhost:9091/users/v1/userlist",
+      "/users/v1/userlist",
       { headers }
     );
     setUser(response.data);
@@ -124,7 +124,7 @@ const AddExpense = (props: Props) => {
         'Authorization': `Bearer ${access_token}`,
       };
         try {
-          const response = await axios.post('http://localhost:9091/expense/add',expenseData,{headers});
+          const response = await axios.post('/expense/add',expenseData,{headers});
           console.log(response.data)
           alert("Expense created successfully!");
           

@@ -3,7 +3,7 @@ import { darken, lighten } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 
-  
+//New, Call Back Later, Schedule Visit, Customer Agreed, Rejected/Denied, Invalid Lead, Onboarded, Others
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     '.lead-status-new': {
       background: '#c6efce', /* green background */
@@ -14,6 +14,11 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
       background: '#ffcdd2', /* red background */
       color: '#b71c1c', /* red text */
       backgroundColor: '#ffcdd2', /* for TypeScript validation */
+    },
+    '.lead-status-inprogress': {
+      background: '#FFA500', /* green background */
+      color: '#f7d9bc', /* green text */
+      backgroundColor: '#FFA500', /* for TypeScript validation */
     },
   }));
 

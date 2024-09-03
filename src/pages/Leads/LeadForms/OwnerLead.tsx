@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, Autocomplete, TextField, FormControlLabel, Checkbox, Stack, Chip, Button, ButtonGroup, Typography, Grid, FormGroup, FormLabel, FormHelperText, Box } from '@mui/material';
 import { MuiTelInput } from 'mui-tel-input';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -10,7 +10,34 @@ import { useNavigate } from 'react-router-dom';
 
 const OwnerLead = () => {
     const navigate = useNavigate();
+    const [location, setLocation] = useState([ { locationId: "", locationName: ""}]);
 
+    useEffect(()=> {
+        fetchLocationList();
+    });
+
+    const fetchLocationList = async () => {
+        const access_token = localStorage.getItem("access_token");
+        if (access_token === null) {
+            alert("Token is missing ");
+            return;
+          }
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          };
+      
+          const response = await axios.get(
+            "/configure/view-all-locations",
+            { headers }
+          );
+          if (response.status === 200) {
+            setLocation(response.data);
+          }
+          else{
+            alert("Unable to load locations");
+          }
+    };
     const leadSource = [
         {
             value: "FACEBOOK",
@@ -103,7 +130,12 @@ const OwnerLead = () => {
         'Agara Lake',
         'Harlur Road',
         'Carmeralum',
-        'Iblur Lake'
+        'Iblur Lake',
+        'Varthur',
+        'Thanisandra',
+        'Kasavanahalli',
+        'Rayasandra',
+        'BTM Layout'
     ];
 
 
@@ -199,7 +231,7 @@ const OwnerLead = () => {
         }
         console.log(data);
         try {
-            const response = await axios.post("http://localhost:9091/owner-leads/v1/register-owner-lead", data, { headers })
+            const response = await axios.post("/owner-leads/v1/register-owner-lead", data, { headers })
             console.log(response.data);
             alert(response.data);
             navigate("/leads/allleads");
@@ -375,9 +407,9 @@ const OwnerLead = () => {
                             label='Locality'
                         >
                             {/* Mapping over the locality array and rendering a MenuItem for each locality option */}
-                            {locality.map((value, index) => (
-                                <MenuItem key={index} value={value}>
-                                    {value}
+                            {location.map((value, index) => (
+                                <MenuItem key={index} value={value.locationName}>
+                                    {value.locationName}
                                 </MenuItem>
                             ))}
                         </Select>

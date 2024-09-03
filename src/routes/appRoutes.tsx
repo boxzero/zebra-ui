@@ -28,6 +28,7 @@ import ViewUser from "../pages/UserManagement/ViewUser";
 import EditUser from "../pages/UserManagement/EditUser";
 import PropertyScan from "../pages/ClayManage/PropertyScan";
 import { ViewAllExpense } from "../pages/Expense/ViewAllExpense";
+import Locations from "../pages/Config/Locations";
 
 
 
@@ -253,6 +254,14 @@ const appRoutes: RouteType[] = [
               sidebarProps: {
                 displayText: "Amenities"
               }
+          },
+          {
+            path: "/config/locations",
+            element: <Locations/>,
+            state: "config.locations",
+            sidebarProps: {
+              displayText: "Locations"
+            }
           }
         ]
 

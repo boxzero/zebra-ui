@@ -77,7 +77,7 @@ const ViewAllUsers = () => {
       'Authorization': `Bearer ${access_token}`,
       };
 
-    const response = await axios.delete(`http://localhost:9091/users/v1/delete/${id}`,{headers});
+    const response = await axios.delete(`/users/v1/delete/${id}`,{headers});
     
     alert(response.data);
   }catch (error:any) {
@@ -99,7 +99,7 @@ const ViewAllUsers = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${access_token}`,
         };
-        const response = await axios.get('http://localhost:9091/users/v1/all',{headers});
+        const response = await axios.get('/users/v1/all',{headers});
         
         setRows(response.data);
       }catch(err:any) {

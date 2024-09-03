@@ -81,7 +81,7 @@ const NewUser = (props: Props) => {
     'Authorization': `Bearer ${access_token}`,
   };
     try {
-      const response = await axios.post('http://localhost:9091/users/v1/register-user',formData,{headers});
+      const response = await axios.post('/users/v1/register-user',formData,{headers});
       console.log(response.data)
       alert("User created successfully!");
       navigate("/users/viewallusers");

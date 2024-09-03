@@ -19,7 +19,7 @@ const ViewAllRoles = (props: Props) => {
       'Authorization': `Bearer ${access_token}`
     }
 
-    const response = await axios.get('http://localhost:9091/roles/v1/all',{headers});
+    const response = await axios.get('/roles/v1/all',{headers});
     setRows(response.data)
   }
   useEffect(() => {

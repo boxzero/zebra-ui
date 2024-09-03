@@ -93,7 +93,7 @@ const EditUser = () => {
         Authorization: `Bearer ${access_token}`
     };
 
-    const response = await axios.get('http://localhost:9091/roles/v1/all',{headers});
+    const response = await axios.get('/roles/v1/all',{headers});
     setRoles(response.data)
 
   } 
@@ -117,7 +117,7 @@ const EditUser = () => {
             'Authorization': `Bearer ${access_token}`
         };
         
-        const response = await axios.get(`http://localhost:9091/users/v1/${id}`, {headers});
+        const response = await axios.get(`/users/v1/${id}`, {headers});
         console.log(response.data);
         setUser(response.data);
         setUserRoles(response.data.roles.map((i:any) => i.name));
@@ -148,7 +148,7 @@ const EditUser = () => {
         setUser({ ...user, roles: roleNamesOnly });
 
         try {
-            const response = await axios.put(`http://localhost:9091/users/v1/update/${id}`,user,{headers});
+            const response = await axios.put(`/users/v1/update/${id}`,user,{headers});
              console.log(response.data)
             alert("User updated successfully!");
             navigate("/users/viewallusers");

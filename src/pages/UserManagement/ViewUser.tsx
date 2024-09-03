@@ -46,7 +46,7 @@ const ViewUser = () => {
         };
         
 
-        const response = await axios.get(`http://localhost:9091/users/v1/${id}`, {headers});
+        const response = await axios.get(`/users/v1/${id}`, {headers});
         console.log(response.data);
         setUser(response.data);
         //console.log(user);
